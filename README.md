@@ -1,62 +1,99 @@
-# :package_description
+# Filament Versionable
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/:vendor_slug/:package_slug.svg?style=flat-square)](https://packagist.org/packages/:vendor_slug/:package_slug)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/:vendor_slug/:package_slug/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/:vendor_slug/:package_slug/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/:vendor_slug/:package_slug/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/:vendor_slug/:package_slug/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/:vendor_slug/:package_slug.svg?style=flat-square)](https://packagist.org/packages/:vendor_slug/:package_slug)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/mansoor/filament-versionable.svg?style=flat-square)](https://packagist.org/packages/mansoor/filament-versionable)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/mansoor/filament-versionable/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/mansoor/filament-versionable/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/mansoor/filament-versionable/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/mansoor/filament-versionable/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
+[![Total Downloads](https://img.shields.io/packagist/dt/mansoor/filament-versionable.svg?style=flat-square)](https://packagist.org/packages/mansoor/filament-versionable)
 
-<!--delete-->
----
-This repo can be used to scaffold a Filament plugin. Follow these steps to get started:
+A Filament plugin and a wrapper around [Laravel Versionable](https://github.com/overtrue/laravel-versionable) to create versions Laravel Models. When ever you save a model, it would store the specified `$versionable` fields to the Database and then you can revert to any target model state any time.
 
-1. Press the "Use this template" button at the top of this repo to create a new repo with the contents of this skeleton.
-2. Run "php ./configure.php" to run a script that will replace all placeholders throughout all the files.
-3. Make something great!
----
-<!--/delete-->
+### ⚠️ This plugin is using the unreleased version of Laravel Versionable ⚠️
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+![](./image.png)
 
 ## Installation
 
 You can install the package via composer:
 
 ```bash
-composer require :vendor_slug/:package_slug
-```
-
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --tag=":package_slug-migrations"
-php artisan migrate
-```
-
-You can publish the config file with:
-
-```bash
-php artisan vendor:publish --tag=":package_slug-config"
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag=":package_slug-views"
-```
-
-This is the contents of the published config file:
-
-```php
-return [
-];
+composer require mansoor/filament-versionable
 ```
 
 ## Usage
 
+Add `Overtrue\LaravelVersionable\Versionable` trait to your model and set versionable attributes:
+
 ```php
-$variable = new VendorName\Skeleton();
-echo $variable->echoPhrase('Hello, VendorName!');
+class Post extends Model
+{
+    use Overtrue\LaravelVersionable\Versionable;
+
+    protected $versionable = ['title', 'content'];
+}
 ```
+
+Create a Revisons Resource Page to Show Revisions, it should extend the `Mansoor\FilamentVersionable\RevisionsPage`. The page should look like:
+
+```php
+namespace App\Filament\Resources\ArticleResource\Pages;
+
+use App\Filament\Resources\ArticleResource;
+use Mansoor\FilamentVersionable\RevisionsPage;
+
+class ArticleRevisions extends RevisionsPage
+{
+    protected static string $resource = ArticleResource::class;
+}
+```
+
+Next, Add the Revisions page to your Resource
+
+```php
+use App\Filament\Resources\ArticleResource\Pages;
+
+public static function getPages(): array
+{
+    return [
+        ...
+        'revisions' => Pages\ArticleRevisions::route('/{record}/revisions'),
+    ];
+}
+```
+
+Add `RevisionsAction` to your page, this action would appear when there are any versions for the model your are viewing/editing.
+
+```php
+use Mansoor\FilamentVersionable\Page\RevisionsAction;
+
+protected function getActions(): array
+{
+    return [
+        RevisionsAction::make(),
+    ];
+}
+```
+
+You can also show the `RevisionsAction` on your table rows.
+
+```php
+use Mansoor\FilamentVersionable\Table\RevisionsAction;
+
+$table->filters([
+    RevisionsAction::make(),
+]);
+```
+
+You are all set! Your app should store the model states and you can manage them using Filament.
+
+## Customisation
+
+If you want to change the UI for Revisions page, you may publish the publish the views to do so.
+
+```bash
+php artisan vendor:publish --tag="filament-versionable-views"
+```
+
+If you want more control over how the versions are stored, you may read the [Laravel Versionable Docs](https://github.com/overtrue/laravel-versionable).
 
 ## Testing
 
@@ -78,7 +115,8 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Credits
 
-- [:author_name](https://github.com/:author_username)
+- [Mansoor Ahmed](https://github.com/mansoorkhan96)
+- [安正超](https://github.com/overtrue) for [Laravel Versionable](https://github.com/overtrue/laravel-versionable)
 - [All Contributors](../../contributors)
 
 ## License

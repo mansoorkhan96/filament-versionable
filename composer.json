@@ -1,31 +1,29 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "mansoor/filament-versionable",
+    "description": "This is my package filament-versionable",
     "keywords": [
-        ":vendor_name",
+        "mansoor",
         "laravel",
-        ":package_slug"
+        "filament-versionable"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/mansoor/filament-versionable",
     "support": {
-        "issues": "https://github.com/:vendor_slug/:package_slug/issues",
-        "source": "https://github.com/:vendor_slug/:package_slug"
+        "issues": "https://github.com/mansoor/filament-versionable/issues",
+        "source": "https://github.com/mansoor/filament-versionable"
     },
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "Mansoor Ahmed",
             "role": "Developer"
         }
     ],
     "require": {
         "php": "^8.1",
         "filament/filament": "^3.0",
-        "filament/forms": "^3.0",
-        "filament/tables": "^3.0",
         "spatie/laravel-package-tools": "^1.15.0",
-        "illuminate/contracts": "^10.0"
+        "illuminate/contracts": "^10.0",
+        "overtrue/laravel-versionable": "5.x-dev"
     },
     "require-dev": {
         "laravel/pint": "^1.0",
@@ -37,18 +35,17 @@
         "pestphp/pest-plugin-laravel": "^2.0",
         "phpstan/extension-installer": "^1.1",
         "phpstan/phpstan-deprecation-rules": "^1.0",
-        "phpstan/phpstan-phpunit": "^1.0",
-        "spatie/laravel-ray": "^1.26"
+        "phpstan/phpstan-phpunit": "^1.0"
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src/",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories/"
+            "Mansoor\\FilamentVersionable\\": "src/",
+            "Mansoor\\FilamentVersionable\\Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests/"
+            "Mansoor\\FilamentVersionable\\Tests\\": "tests/"
         }
     },
     "scripts": {
@@ -68,13 +65,19 @@
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
+                "Mansoor\\FilamentVersionable\\FilamentVersionableServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\Facades\\Skeleton"
+                "FilamentVersionable": "Mansoor\\FilamentVersionable\\Facades\\FilamentVersionable"
             }
         }
     },
+    "repositories": [
+        {
+            "type": "git",
+            "url": "git@github.com:overtrue/laravel-versionable.git"
+        }
+    ],
     "minimum-stability": "dev",
     "prefer-stable": true
 }

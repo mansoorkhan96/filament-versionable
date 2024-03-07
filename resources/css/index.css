@@ -1,1 +1,55 @@
-@import '../../vendor/filament/filament/resources/css/theme.css';
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .diff-removed-light {
+        background: repeating-linear-gradient(-40deg, transparent, transparent 0.5em, #f3f4f6 0em, #f3f4f6 1em);
+    }
+
+    .diff-removed-dark {
+        background: repeating-linear-gradient(-40deg, transparent, transparent .5em, #374151 0, #374151 1em);
+    }
+}
+
+.diff-wrapper.diff {
+    @apply w-full break-all border-separate border-spacing-y-0 border-spacing-x-1;
+}
+
+.diff-wrapper.diff td {
+    @apply leading-relaxed px-3 py-2 align-top;
+}
+
+.diff-wrapper.diff.diff-html .change.change-eq .old,
+.diff-wrapper.diff.diff-html .change.change-eq .new {
+    @apply bg-transparent w-1/2;
+}
+
+.diff-wrapper.diff.diff-html .change-rep .old,
+.diff-wrapper.diff.diff-html .change-del .old {
+    @apply bg-[#fcf0f1] w-1/2 dark:bg-[#ef535033];
+}
+
+.diff-wrapper.diff.diff-html .change-rep .new,
+.diff-wrapper.diff.diff-html .change-ins .new {
+    @apply bg-[#edfaef] w-1/2 dark:bg-[#1d3a26];
+}
+
+
+.diff-wrapper.diff.diff-html .change ins,
+.diff-wrapper.diff.diff-html .change del {
+    text-decoration: none;
+}
+
+.diff-wrapper.diff.diff-html .change ins {
+    @apply bg-[#68de7c] dark:bg-[#30824c];
+}
+
+.diff-wrapper.diff.diff-html .change del {
+    @apply bg-[#ffabaf] dark:bg-[#EF535090];
+}
+
+.diff-wrapper.diff.diff-html .change .old.none,
+.diff-wrapper.diff.diff-html .change .new.none,
+.diff-wrapper.diff.diff-html .change .rep.none {
+    @apply diff-removed-light cursor-not-allowed dark:diff-removed-dark;
+}

@@ -11,3 +11,5 @@ phpunit.xml
 phpstan.neon
 testbench.yaml
 vendor
+.phpunit.result.cache
+/.phpunit.cache
