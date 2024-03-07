@@ -9,7 +9,7 @@ A Filament plugin and a wrapper around [Laravel Versionable](https://github.com/
 
 ### ⚠️ This plugin is using the unreleased version of Laravel Versionable ⚠️
 
-![](./image.png)
+![](./image.jpg)
 
 ## Installation
 
