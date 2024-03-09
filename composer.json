@@ -23,7 +23,7 @@
         "filament/filament": "^3.0",
         "spatie/laravel-package-tools": "^1.15.0",
         "illuminate/contracts": "^10.0",
-        "overtrue/laravel-versionable": "5.x-dev"
+        "overtrue/laravel-versionable": "^5.0"
     },
     "require-dev": {
         "laravel/pint": "^1.0",
@@ -72,12 +72,6 @@
             }
         }
     },
-    "repositories": [
-        {
-            "type": "git",
-            "url": "git@github.com:overtrue/laravel-versionable.git"
-        }
-    ],
     "minimum-stability": "dev",
     "prefer-stable": true
 }

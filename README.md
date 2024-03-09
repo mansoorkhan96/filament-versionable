@@ -7,8 +7,6 @@
 
 A Filament plugin and a wrapper around [Laravel Versionable](https://github.com/overtrue/laravel-versionable) to create versions Laravel Models. When ever you save a model, it would store the specified `$versionable` fields to the Database and then you can revert to any target model state any time.
 
-### ⚠️ This plugin is using the unreleased version of Laravel Versionable ⚠️
-
 ![](./image.jpg)
 
 ## Installation

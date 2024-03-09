@@ -13,3 +13,4 @@ testbench.yaml
 vendor
 .phpunit.result.cache
 /.phpunit.cache
+phpstan-baseline.neon

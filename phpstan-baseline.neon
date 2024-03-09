@@ -1,0 +1,91 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:versions\\(\\)\\.$#"
+			count: 2
+			path: src/Page/RevisionsAction.php
+
+		-
+			message: "#^Call to an undefined static method Livewire\\\\Component\\:\\:getResource\\(\\)\\.$#"
+			count: 1
+			path: src/Page/RevisionsAction.php
+
+		-
+			message: "#^Call to static method getUrl\\(\\) on an unknown class Mansoor\\\\FilamentVersionable\\\\Page\\\\Filament\\\\Resources\\\\Resource\\.$#"
+			count: 1
+			path: src/Page/RevisionsAction.php
+
+		-
+			message: "#^PHPDoc tag @var contains unknown class Mansoor\\\\FilamentVersionable\\\\Page\\\\Filament\\\\Resources\\\\Resource\\.$#"
+			count: 1
+			path: src/Page/RevisionsAction.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$latestVersion\\.$#"
+			count: 1
+			path: src/RevisionsPage.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:diff\\(\\)\\.$#"
+			count: 1
+			path: src/RevisionsPage.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:nextVersion\\(\\)\\.$#"
+			count: 1
+			path: src/RevisionsPage.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:previousVersion\\(\\)\\.$#"
+			count: 2
+			path: src/RevisionsPage.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:revert\\(\\)\\.$#"
+			count: 1
+			path: src/RevisionsPage.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:versions\\(\\)\\.$#"
+			count: 1
+			path: src/RevisionsPage.php
+
+		-
+			message: "#^Cannot access property \\$firstVersion on Illuminate\\\\Database\\\\Eloquent\\\\Model\\|int\\|string\\.$#"
+			count: 1
+			path: src/RevisionsPage.php
+
+		-
+			message: "#^Cannot call method getVersion\\(\\) on Illuminate\\\\Database\\\\Eloquent\\\\Model\\|int\\|string\\.$#"
+			count: 1
+			path: src/RevisionsPage.php
+
+		-
+			message: "#^Cannot call method versions\\(\\) on Illuminate\\\\Database\\\\Eloquent\\\\Model\\|int\\|string\\.$#"
+			count: 1
+			path: src/RevisionsPage.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:versions\\(\\)\\.$#"
+			count: 2
+			path: src/Table/RevisionsAction.php
+
+		-
+			message: "#^Call to an undefined static method Livewire\\\\Component\\:\\:getResource\\(\\)\\.$#"
+			count: 1
+			path: src/Table/RevisionsAction.php
+
+		-
+			message: "#^Call to static method getUrl\\(\\) on an unknown class Mansoor\\\\FilamentVersionable\\\\Table\\\\Filament\\\\Resources\\\\Resource\\.$#"
+			count: 1
+			path: src/Table/RevisionsAction.php
+
+		-
+			message: "#^PHPDoc tag @var contains unknown class Mansoor\\\\FilamentVersionable\\\\Table\\\\Filament\\\\Resources\\\\Resource\\.$#"
+			count: 1
+			path: src/Table/RevisionsAction.php
+
+		-
+			message: "#^Call to an undefined method Pest\\\\PendingCalls\\\\TestCall\\:\\:expect\\(\\)\\.$#"
+			count: 1
+			path: tests/ArchTest.php
