@@ -17,6 +17,7 @@ class FilamentVersionableServiceProvider extends PackageServiceProvider
     {
         $package
             ->name(static::$name)
+            ->hasTranslations()
             ->hasAssets()
             ->hasViews();
     }

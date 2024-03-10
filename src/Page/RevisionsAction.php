@@ -17,6 +17,8 @@ class RevisionsAction extends Action
     {
         parent::setUp();
 
+        $this->label(__('filament-versionable::actions.revisions'));
+
         $this->hidden(fn (Model $record) => $record->versions()->count() <= 1);
 
         $this->button();
