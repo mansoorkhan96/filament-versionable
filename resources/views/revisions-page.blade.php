@@ -5,19 +5,9 @@
     >
         <div class="col-span-3">
             <div class="mb-4 flex justify-between">
-                <x-filament::button
-                    :disabled="$this->version->previousVersion()->is($this->record->firstVersion)"
-                    wire:click="showPreviousVersion"
-                >
-                    Previous
-                </x-filament::button>
+                {{ $this->previousVersionAction }}
 
-                <x-filament::button
-                    :disabled="$this->version->is($this->record->lastVersion)"
-                    wire:click="showNextVersion"
-                >
-                    Next
-                </x-filament::button>
+                {{ $this->nextVersionAction }}
             </div>
 
             <x-filament::section compact>
@@ -30,7 +20,9 @@
                             />
 
                             <div class="flex flex-col">
-                                <span>Revision by {{ $this->version->user->name }}</span>
+                                <span>
+                                    {{ __('filament-versionable::page.revision_by', ['name' => $this->version->user->name]) }}
+                                </span>
 
                                 <small class="text-sm font-medium text-gray-500 dark:text-gray-400">
                                     {{ $this->version->created_at->diffForHumans() }}
@@ -40,19 +32,7 @@
                             </div>
                         </div>
 
-                        @if ($this->version->isNot($this->record->lastVersion))
-                            <x-filament::button wire:click="restoreSelectedVersion">
-                                Restore This Revision
-                            </x-filament::button>
-                        @else
-                            <x-filament::badge
-                                size="xl"
-                                color="info"
-                                icon="heroicon-m-information-circle"
-                            >
-                                This is the latest Revision
-                            </x-filament::badge>
-                        @endif
+                        {{ $this->restoreVersionAction }}
                     </div>
                 </x-slot>
 
@@ -80,7 +60,7 @@
             compact
         >
             <x-slot name="heading">
-                Revisions List
+                {{ __('filament-versionable::page.revisions_list') }}
             </x-slot>
 
             <ol
@@ -100,7 +80,7 @@
                                     'text-primary-600' => $version->id === $this->version->id,
                                     'group-hover:text-primary-600',
                                 ])>
-                                    Revision by
+                                    {{ __('filament-versionable::page.revision_by', ['name' => '']) }}
                                 </span>
 
                                 <span @class([
