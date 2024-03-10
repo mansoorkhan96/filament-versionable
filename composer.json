@@ -23,7 +23,7 @@
         "filament/filament": "^3.0",
         "spatie/laravel-package-tools": "^1.15.0",
         "illuminate/contracts": "^10.0",
-        "overtrue/laravel-versionable": "^5.0"
+        "overtrue/laravel-versionable": "^5.1"
     },
     "require-dev": {
         "laravel/pint": "^1.0",
