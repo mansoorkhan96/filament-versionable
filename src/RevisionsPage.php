@@ -51,7 +51,7 @@ class RevisionsPage extends Page
     public function diff(): array
     {
         return $this->version
-            ->diff($this->version->previousVersion())
+            ->diff()
             ->toSideBySideHtml(
                 differOptions: ['fullContextIfIdentical' => true],
                 renderOptions: ['lineNumbers' => false, 'showHeader' => false, 'detailLevel' => 'word', 'spacesToNbsp' => false]
