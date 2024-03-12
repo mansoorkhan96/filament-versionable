@@ -2,6 +2,19 @@
 
 All notable changes to `filament-versionable` will be documented in this file.
 
+## 0.0.5 - 2024-03-12
+
+### What's Changed
+
+* Add dutch translations by @CamilleScholtz in https://github.com/mansoorkhan96/filament-versionable/pull/5
+* Remove unused restore_version translations by @mansoorkhan96 in https://github.com/mansoorkhan96/filament-versionable/pull/6
+
+### New Contributors
+
+* @CamilleScholtz made their first contribution in https://github.com/mansoorkhan96/filament-versionable/pull/5
+
+**Full Changelog**: https://github.com/mansoorkhan96/filament-versionable/compare/0.0.4...0.0.5
+
 ## 0.0.4 - 2024-03-10
 
 ### What's Changed
