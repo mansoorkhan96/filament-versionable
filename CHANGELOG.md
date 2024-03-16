@@ -2,6 +2,14 @@
 
 All notable changes to `filament-versionable` will be documented in this file.
 
+## 0.0.6 - 2024-03-16
+
+### What's Changed
+
+* Fix/Diff stat icon color by @mansoorkhan96 in https://github.com/mansoorkhan96/filament-versionable/pull/9
+
+**Full Changelog**: https://github.com/mansoorkhan96/filament-versionable/compare/0.0.5...0.0.6
+
 ## 0.0.5 - 2024-03-12
 
 ### What's Changed
