@@ -6,6 +6,7 @@
             icon="heroicon-m-plus-circle"
             tag="a"
             label="Insertions"
+            color="success"
         />
 
         <span class="text-sm font-semibold">

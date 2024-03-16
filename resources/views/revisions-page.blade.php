@@ -91,10 +91,13 @@
                                             'flex-auto truncate text-sm font-medium leading-6 group-hover:text-primary-600',
                                         ])
                                     >
-                                        <span @class([
-                                            'text-primary-600' => $version->id === $this->version->id,
-                                            'font-normal text-gray-500 group-hover:text-primary-600 dark:text-gray-400',
-                                        ])>
+                                        <span
+                                            @class([
+                                                'text-primary-600' => $version->id === $this->version->id,
+                                                'font-normal text-gray-500 group-hover:text-primary-600 dark:text-gray-400',
+                                            ])
+                                            title="{{ __('filament-versionable::page.revision_by', ['name' => $version->user->name]) }}"
+                                        >
                                             {{ __('filament-versionable::page.revision_by', ['name' => '']) }}
                                         </span>
 
