@@ -19,14 +19,20 @@ composer require mansoor/filament-versionable
 
 ## Usage
 
-Add `Overtrue\LaravelVersionable\Versionable` trait to your model and set versionable attributes:
+Add `Overtrue\LaravelVersionable\Versionable` trait to your model and set `$versionable` attributes.
+
+**NOTE: Make sure to add protected $versionStrategy = VersionStrategy::SNAPSHOT; This would save all the $versionable attributes when any of them changed. There are different bug reports on using VersionStrategy::DIFF**
 
 ```php
+use Overtrue\LaravelVersionable\VersionStrategy;
+
 class Post extends Model
 {
     use Overtrue\LaravelVersionable\Versionable;
 
     protected $versionable = ['title', 'content'];
+
+    protected $versionStrategy = VersionStrategy::SNAPSHOT;
 }
 ```
 
