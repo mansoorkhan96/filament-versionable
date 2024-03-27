@@ -2,6 +2,18 @@
 
 All notable changes to `filament-versionable` will be documented in this file.
 
+## 0.0.7 - 2024-03-27
+
+### What's Changed
+
+* Add french support by @loanbesson in https://github.com/mansoorkhan96/filament-versionable/pull/12
+
+### New Contributors
+
+* @loanbesson made their first contribution in https://github.com/mansoorkhan96/filament-versionable/pull/12
+
+**Full Changelog**: https://github.com/mansoorkhan96/filament-versionable/compare/0.0.6...0.0.7
+
 ## 0.0.6 - 2024-03-16
 
 ### What's Changed
