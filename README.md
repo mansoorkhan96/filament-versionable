@@ -17,6 +17,18 @@ You can install the package via composer:
 composer require mansoor/filament-versionable
 ```
 
+Then, publish the config file and migrations:
+
+```bash
+php artisan vendor:publish --provider="Overtrue\LaravelVersionable\ServiceProvider"
+```
+
+Finally, run the migration:
+
+```bash
+php artisan migrate
+```
+
 ## Usage
 
 Add `Overtrue\LaravelVersionable\Versionable` trait to your model and set `$versionable` attributes.
