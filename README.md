@@ -81,7 +81,7 @@ Add `RevisionsAction` to your page, this action would appear when there are any 
 ```php
 use Mansoor\FilamentVersionable\Page\RevisionsAction;
 
-protected function getActions(): array
+protected function getHeaderActions(): array
 {
     return [
         RevisionsAction::make(),
@@ -94,7 +94,7 @@ You can also show the `RevisionsAction` on your table rows.
 ```php
 use Mansoor\FilamentVersionable\Table\RevisionsAction;
 
-$table->filters([
+$table->actions([
     RevisionsAction::make(),
 ]);
 ```
