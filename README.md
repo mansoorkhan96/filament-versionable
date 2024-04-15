@@ -5,7 +5,11 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/mansoor/filament-versionable/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/mansoor/filament-versionable/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/mansoor/filament-versionable.svg?style=flat-square)](https://packagist.org/packages/mansoor/filament-versionable)
 
-A Filament plugin and a wrapper around [Laravel Versionable](https://github.com/overtrue/laravel-versionable) to create versions Laravel Models. When ever you save a model, it would store the specified `$versionable` fields to the Database and then you can revert to any target model state any time.
+Efforlessly manage your Eloquent model revisions in Filament. It includes:
+
+- A Filament page to show the Diff of what has changed and who changed it
+- A list of Revisions by different users
+- A Restore action to restore the model to any state
 
 ![](./screenshot.png)
 
@@ -33,7 +37,7 @@ php artisan migrate
 
 Add `Overtrue\LaravelVersionable\Versionable` trait to your model and set `$versionable` attributes.
 
-**NOTE: Make sure to add protected $versionStrategy = VersionStrategy::SNAPSHOT; This would save all the $versionable attributes when any of them changed. There are different bug reports on using VersionStrategy::DIFF**
+**NOTE: Make sure to add `protected $versionStrategy = VersionStrategy::SNAPSHOT;` This would save all the $versionable attributes when any of them changed. There are different bug reports on using VersionStrategy::DIFF**
 
 ```php
 use Overtrue\LaravelVersionable\VersionStrategy;
@@ -48,7 +52,7 @@ class Post extends Model
 }
 ```
 
-Create a Revisons Resource Page to Show Revisions, it should extend the `Mansoor\FilamentVersionable\RevisionsPage`. The page should look like:
+Create a Revisons Resource page to show Revisions, it should extend the `Mansoor\FilamentVersionable\RevisionsPage`. If you were to create a Revisions page for `ArticleResource`, it would look like:
 
 ```php
 namespace App\Filament\Resources\ArticleResource\Pages;
@@ -62,7 +66,7 @@ class ArticleRevisions extends RevisionsPage
 }
 ```
 
-Next, Add the Revisions page to your Resource
+Next, Add the ArticleRevisions page (that you just created) to your Resource
 
 ```php
 use App\Filament\Resources\ArticleResource\Pages;
@@ -76,7 +80,7 @@ public static function getPages(): array
 }
 ```
 
-Add `RevisionsAction` to your page, this action would appear when there are any versions for the model your are viewing/editing.
+Add `RevisionsAction` to your edit/view pages, this action would only appear when there are any versions for the model you are viewing/editing.
 
 ```php
 use Mansoor\FilamentVersionable\Page\RevisionsAction;
@@ -89,7 +93,7 @@ protected function getHeaderActions(): array
 }
 ```
 
-You can also show the `RevisionsAction` on your table rows.
+You can also add the `RevisionsAction` to your table.
 
 ```php
 use Mansoor\FilamentVersionable\Table\RevisionsAction;
@@ -99,7 +103,7 @@ $table->actions([
 ]);
 ```
 
-You are all set! Your app should store the model states and you can manage them using Filament.
+You are all set! Your app should store the model states and you can manage them in Filament.
 
 ## Customisation
 
