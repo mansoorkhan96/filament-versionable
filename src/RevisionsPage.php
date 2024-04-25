@@ -17,9 +17,14 @@ class RevisionsPage extends Page
     use InteractsWithRecord;
     use WithPagination;
 
-    public Version | Model | null $version;
+    public Version|Model|null $version;
 
     protected static string $view = 'filament-versionable::revisions-page';
+
+    public function shouldStripTags(): bool
+    {
+        return false;
+    }
 
     public static function getNavigationIcon(): ?string
     {
@@ -36,7 +41,7 @@ class RevisionsPage extends Page
         return __('filament-versionable::page.content_tab_label');
     }
 
-    public function mount(int | string $record): void
+    public function mount(int|string $record): void
     {
         $this->record = $this->resolveRecord($record);
 
@@ -54,7 +59,8 @@ class RevisionsPage extends Page
             ->diff()
             ->toSideBySideHtml(
                 differOptions: ['fullContextIfIdentical' => true],
-                renderOptions: ['lineNumbers' => false, 'showHeader' => false, 'detailLevel' => 'word', 'spacesToNbsp' => false]
+                renderOptions: ['lineNumbers' => false, 'showHeader' => false, 'detailLevel' => 'word', 'spacesToNbsp' => false],
+                stripTags: $this->shouldStripTags()
             );
     }
 
@@ -123,7 +129,7 @@ class RevisionsPage extends Page
         abort_unless(static::getResource()::canEdit($this->getRecord()), 403);
     }
 
-    public function getTitle(): string | Htmlable
+    public function getTitle(): string|Htmlable
     {
         if (filled(static::$title)) {
             return static::$title;
