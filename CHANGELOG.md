@@ -2,6 +2,25 @@
 
 All notable changes to `filament-versionable` will be documented in this file.
 
+## v0.0.8 - 2024-04-25
+
+### What's Changed
+
+* Corrected the spelling of the French translation by @loanbesson in https://github.com/mansoorkhan96/filament-versionable/pull/13
+* Bump dependabot/fetch-metadata from 1.6.0 to 2.0.0 by @dependabot in https://github.com/mansoorkhan96/filament-versionable/pull/11
+* add migration instructions on readme by @atmonshi in https://github.com/mansoorkhan96/filament-versionable/pull/14
+* Bump aglipanci/laravel-pint-action from 2.3.1 to 2.4 by @dependabot in https://github.com/mansoorkhan96/filament-versionable/pull/16
+* Fix the Documentation Details by @PovilasKorop in https://github.com/mansoorkhan96/filament-versionable/pull/15
+* feat: Add option to strip tags by @mansoorkhan96 in https://github.com/mansoorkhan96/filament-versionable/pull/17
+
+### New Contributors
+
+* @dependabot made their first contribution in https://github.com/mansoorkhan96/filament-versionable/pull/11
+* @atmonshi made their first contribution in https://github.com/mansoorkhan96/filament-versionable/pull/14
+* @PovilasKorop made their first contribution in https://github.com/mansoorkhan96/filament-versionable/pull/15
+
+**Full Changelog**: https://github.com/mansoorkhan96/filament-versionable/compare/0.0.7...v0.0.8
+
 ## 0.0.7 - 2024-03-27
 
 ### What's Changed
