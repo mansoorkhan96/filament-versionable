@@ -21,6 +21,11 @@ class RevisionsPage extends Page
 
     protected static string $view = 'filament-versionable::revisions-page';
 
+    public function shouldStripTags(): bool
+    {
+        return false;
+    }
+
     public static function getNavigationIcon(): ?string
     {
         return static::$navigationIcon ?? 'heroicon-o-clock';
@@ -54,7 +59,8 @@ class RevisionsPage extends Page
             ->diff()
             ->toSideBySideHtml(
                 differOptions: ['fullContextIfIdentical' => true],
-                renderOptions: ['lineNumbers' => false, 'showHeader' => false, 'detailLevel' => 'word', 'spacesToNbsp' => false]
+                renderOptions: ['lineNumbers' => false, 'showHeader' => false, 'detailLevel' => 'word', 'spacesToNbsp' => false],
+                stripTags: $this->shouldStripTags()
             );
     }
 

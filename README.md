@@ -115,6 +115,22 @@ php artisan vendor:publish --tag="filament-versionable-views"
 
 If you want more control over how the versions are stored, you may read the [Laravel Versionable Docs](https://github.com/overtrue/laravel-versionable).
 
+## Strip Tags from Diff
+
+You can easily remove/strip HTML tags from the diff by just overriding `shouldStripTags` method inside your revisions page.
+
+```php
+class ArticleRevisions extends RevisionsPage
+{
+    protected static string $resource = ArticleResource::class;
+
+    public function shouldStripTags(): bool
+    {
+        return true;
+    }
+}
+```
+
 ## Testing
 
 ```bash
