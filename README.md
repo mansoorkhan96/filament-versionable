@@ -5,7 +5,7 @@
 # Filament Versionable
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/mansoor/filament-versionable.svg?style=flat-square)](https://packagist.org/packages/mansoor/filament-versionable)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/mansoorkhan96/filament-versionable/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/mansoorkhan96/filament-versionable/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![run-tests](https://github.com/mansoorkhan96/filament-versionable/actions/workflows/run-tests.yml/badge.svg)](https://github.com/mansoorkhan96/filament-versionable/actions/workflows/run-tests.yml)
 [![GitHub Code Style Action Status](https://github.com/mansoorkhan96/filament-versionable/actions/workflows/fix-php-code-styling.yml/badge.svg)](https://github.com/mansoorkhan96/filament-versionable/actions/workflows/fix-php-code-styling.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/mansoor/filament-versionable.svg?style=flat-square)](https://packagist.org/packages/mansoor/filament-versionable)
 
