@@ -25,7 +25,7 @@ class FilamentVersionableServiceProvider extends PackageServiceProvider
     public function packageBooted(): void
     {
         FilamentAsset::register([
-            Css::make(static::$name, __DIR__ . '/../resources/dist/filament-versionable.css')->loadedOnRequest(),
+            Css::make(static::$name, __DIR__.'/../resources/dist/filament-versionable.css')->loadedOnRequest(),
         ], static::$name);
     }
 }
