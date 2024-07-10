@@ -7,6 +7,8 @@ use Filament\Resources\Pages\Concerns\InteractsWithRecord;
 use Filament\Resources\Pages\Page;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\HtmlString;
 use Livewire\Attributes\Computed;
 use Livewire\WithPagination;
@@ -17,7 +19,7 @@ class RevisionsPage extends Page
     use InteractsWithRecord;
     use WithPagination;
 
-    public Version | Model | null $version;
+    public Version|Model|null $version;
 
     protected static string $view = 'filament-versionable::revisions-page';
 
@@ -41,7 +43,7 @@ class RevisionsPage extends Page
         return __('filament-versionable::page.content_tab_label');
     }
 
-    public function mount(int | string $record): void
+    public function mount(int|string $record): void
     {
         $this->record = $this->resolveRecord($record);
 
@@ -64,18 +66,20 @@ class RevisionsPage extends Page
             );
     }
 
+    /** @phpstan-ignore-next-line */
     #[Computed]
-    public function revisionsList()
+    public function revisionsList(): LengthAwarePaginator
     {
         return $this->record
             ->versions()
+            /** @phpstan-ignore-next-line */
             ->whereNot('id', $this->record->firstVersion->id)
             ->with('user')
             ->latest()
             ->paginate($this->getRevisionsListPerPage());
     }
 
-    public function showVersion($versionId)
+    public function showVersion(int $versionId): void
     {
         $this->version = $this->record->getVersion($versionId);
     }
@@ -92,6 +96,7 @@ class RevisionsPage extends Page
     {
         return Action::make('nextVersion')
             ->label(__('filament-versionable::actions.next_version'))
+            /** @phpstan-ignore-next-line */
             ->disabled(fn () => $this->version->is($this->record->lastVersion))
             ->action(fn () => $this->nextVersion());
     }
@@ -103,21 +108,22 @@ class RevisionsPage extends Page
             ->requiresConfirmation()
             ->modalDescription(__('filament-versionable::actions.restore.modal_description'))
             ->modalSubmitActionLabel(__('filament-versionable::actions.restore.modal_submit_action_label'))
+            /** @phpstan-ignore-next-line */
             ->disabled(fn () => $this->version->is($this->record->lastVersion))
             ->action(fn () => $this->restoreVersion());
     }
 
-    public function previousVersion()
+    public function previousVersion(): void
     {
         $this->version = $this->version->previousVersion();
     }
 
-    public function nextVersion()
+    public function nextVersion(): void
     {
         $this->version = $this->version->nextVersion();
     }
 
-    public function restoreVersion()
+    public function restoreVersion(): RedirectResponse
     {
         $this->version->revert();
 
@@ -129,7 +135,7 @@ class RevisionsPage extends Page
         abort_unless(static::getResource()::canEdit($this->getRecord()), 403);
     }
 
-    public function getTitle(): string | Htmlable
+    public function getTitle(): string|Htmlable
     {
         if (filled(static::$title)) {
             return static::$title;
