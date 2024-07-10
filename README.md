@@ -1,8 +1,12 @@
+<div align="center">
+    <img width="100px" height="100px" src="icon.png"/>
+</div>
+
 # Filament Versionable
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/mansoor/filament-versionable.svg?style=flat-square)](https://packagist.org/packages/mansoor/filament-versionable)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/mansoor/filament-versionable/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/mansoor/filament-versionable/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/mansoor/filament-versionable/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/mansoor/filament-versionable/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/mansoorkhan96/filament-versionable/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/mansoorkhan96/filament-versionable/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Code Style Action Status](https://github.com/mansoorkhan96/filament-versionable/actions/workflows/fix-php-code-styling.yml/badge.svg)](https://github.com/mansoorkhan96/filament-versionable/actions/workflows/fix-php-code-styling.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/mansoor/filament-versionable.svg?style=flat-square)](https://packagist.org/packages/mansoor/filament-versionable)
 
 Efforlessly manage your Eloquent model revisions in Filament. It includes:
