@@ -7,7 +7,6 @@ use Filament\Resources\Pages\Concerns\InteractsWithRecord;
 use Filament\Resources\Pages\Page;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\HtmlString;
 use Livewire\Attributes\Computed;
@@ -105,11 +104,10 @@ class RevisionsPage extends Page
     {
         return Action::make('restoreVersion')
             ->label(__('filament-versionable::actions.restore.label'))
+            ->color('gray')
             ->requiresConfirmation()
             ->modalDescription(__('filament-versionable::actions.restore.modal_description'))
             ->modalSubmitActionLabel(__('filament-versionable::actions.restore.modal_submit_action_label'))
-            /** @phpstan-ignore-next-line */
-            ->disabled(fn () => $this->version->is($this->record->lastVersion))
             ->action(fn () => $this->restoreVersion());
     }
 
@@ -123,11 +121,11 @@ class RevisionsPage extends Page
         $this->version = $this->version->nextVersion();
     }
 
-    public function restoreVersion(): RedirectResponse
+    public function restoreVersion(): void
     {
-        $this->version->revert();
+        $this->version->previousVersion()->revert();
 
-        return redirect(static::$resource::getUrl('edit', ['record' => $this->getRecord()]));
+        $this->redirect(static::$resource::getUrl('edit', ['record' => $this->getRecord()]));
     }
 
     protected function authorizeAccess(): void
