@@ -47,6 +47,11 @@ parameters:
 
 		-
 			message: "#^Cannot access property \\$firstVersion on Illuminate\\\\Database\\\\Eloquent\\\\Model\\|int\\|string\\.$#"
+			count: 2
+			path: src/RevisionsPage.php
+
+		-
+			message: "#^Cannot access property \\$lastVersion on Illuminate\\\\Database\\\\Eloquent\\\\Model\\|int\\|string\\.$#"
 			count: 1
 			path: src/RevisionsPage.php
 
@@ -57,6 +62,16 @@ parameters:
 
 		-
 			message: "#^Cannot call method versions\\(\\) on Illuminate\\\\Database\\\\Eloquent\\\\Model\\|int\\|string\\.$#"
+			count: 1
+			path: src/RevisionsPage.php
+
+		-
+			message: "#^Method Mansoor\\\\FilamentVersionable\\\\RevisionsPage\\:\\:diff\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/RevisionsPage.php
+
+		-
+			message: "#^Method Mansoor\\\\FilamentVersionable\\\\RevisionsPage\\:\\:revisionsList\\(\\) return type with generic class Illuminate\\\\Pagination\\\\LengthAwarePaginator does not specify its types\\: TValue$#"
 			count: 1
 			path: src/RevisionsPage.php
 

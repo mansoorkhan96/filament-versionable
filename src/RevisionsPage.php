@@ -65,13 +65,11 @@ class RevisionsPage extends Page
             );
     }
 
-    /** @phpstan-ignore-next-line */
     #[Computed]
     public function revisionsList(): LengthAwarePaginator
     {
         return $this->record
             ->versions()
-            /** @phpstan-ignore-next-line */
             ->whereNot('id', $this->record->firstVersion->id)
             ->with('user')
             ->latest()
@@ -95,7 +93,6 @@ class RevisionsPage extends Page
     {
         return Action::make('nextVersion')
             ->label(__('filament-versionable::actions.next_version'))
-            /** @phpstan-ignore-next-line */
             ->disabled(fn () => $this->version->is($this->record->lastVersion))
             ->action(fn () => $this->nextVersion());
     }
