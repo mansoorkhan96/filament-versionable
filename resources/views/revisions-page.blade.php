@@ -14,15 +14,19 @@
                     <x-slot name="heading">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap-x-3">
-                                <x-filament-panels::avatar.user
-                                    :user="$this->version->user"
-                                    size="lg"
-                                />
+                                @if ($this->version->user)
+                                    <x-filament-panels::avatar.user
+                                        :user="$this->version->user"
+                                        size="lg"
+                                    />
+                                @endif
 
                                 <div class="flex items-center gap-x-3">
                                     <div class="flex flex-col">
                                         <span>
-                                            {{ __('filament-versionable::page.revision_by', ['name' => $this->version->user->name]) }}
+                                            {{ __('filament-versionable::page.revision_by', [
+                                                'name' => $this->version->user?->name ?? __('filament-versionable::page.anonymous_user'),
+                                            ]) }}
                                         </span>
 
                                         <small class="text-sm font-medium text-gray-500 dark:text-gray-400">
@@ -72,17 +76,19 @@
                             <li
                                 wire:click="showVersion({{ $version->id }})"
                                 @class([
-                                    'pb-4' => $loop->first,
-                                    'pt-4' => $loop->last,
+                                    'pb-4' => $loop->first && !$loop->last,
+                                    'pt-4' => $loop->last && !$loop->first,
                                     'py-4' => !$loop->first && !$loop->last,
                                     'group cursor-pointer',
                                 ])
                             >
                                 <div class="flex items-center gap-x-2">
-                                    <x-filament-panels::avatar.user
-                                        :user="$version->user"
-                                        size="sm"
-                                    />
+                                    @if ($version->user)
+                                        <x-filament-panels::avatar.user
+                                            :user="$version->user"
+                                            size="sm"
+                                        />
+                                    @endif
 
                                     <span
                                         style="flex: 1 1 auto;"
@@ -96,12 +102,14 @@
                                                 'text-primary-600' => $version->id === $this->version->id,
                                                 'font-normal text-gray-500 group-hover:text-primary-600 dark:text-gray-400',
                                             ])
-                                            title="{{ __('filament-versionable::page.revision_by', ['name' => $version->user->name]) }}"
+                                            title="{{ __('filament-versionable::page.revision_by', [
+                                                'name' => $version->user?->name ?? __('filament-versionable::page.anonymous_user'),
+                                            ]) }}"
                                         >
                                             {{ __('filament-versionable::page.revision_by', ['name' => '']) }}
                                         </span>
 
-                                        {{ $version->user->name }}
+                                        {{ $version->user?->name ?? __('filament-versionable::page.anonymous_user') }}
                                     </span>
 
                                     <span class="flex-none text-xs text-gray-500 dark:text-gray-400">
