@@ -2,6 +2,19 @@
 
 All notable changes to `filament-versionable` will be documented in this file.
 
+## v0.0.10 - 2024-09-22
+
+### What's Changed
+
+* docs: Add zh_* translations. by @overtrue in https://github.com/mansoorkhan96/filament-versionable/pull/24
+* fix: error on empty/null user in revisions by @mansoorkhan96 in https://github.com/mansoorkhan96/filament-versionable/pull/25
+
+### New Contributors
+
+* @overtrue made their first contribution in https://github.com/mansoorkhan96/filament-versionable/pull/24
+
+**Full Changelog**: https://github.com/mansoorkhan96/filament-versionable/compare/v0.0.9...v0.0.10
+
 ## v0.0.8 - 2024-04-25
 
 ### What's Changed
