@@ -2,6 +2,18 @@
 
 All notable changes to `filament-versionable` will be documented in this file.
 
+## v0.0.12 - 2024-12-10
+
+### What's Changed
+
+* Add czech translations by @JarkaP in https://github.com/mansoorkhan96/filament-versionable/pull/27
+
+### New Contributors
+
+* @JarkaP made their first contribution in https://github.com/mansoorkhan96/filament-versionable/pull/27
+
+**Full Changelog**: https://github.com/mansoorkhan96/filament-versionable/compare/v0.0.11...v0.0.12
+
 ## v0.0.11 - 2024-09-23
 
 ### What's Changed
