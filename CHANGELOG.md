@@ -2,6 +2,20 @@
 
 All notable changes to `filament-versionable` will be documented in this file.
 
+## v0.0.13 - 2025-03-28
+
+### What's Changed
+
+* Bump dependabot/fetch-metadata from 2.2.0 to 2.3.0 by @dependabot in https://github.com/mansoorkhan96/filament-versionable/pull/30
+* Bump aglipanci/laravel-pint-action from 2.4 to 2.5 by @dependabot in https://github.com/mansoorkhan96/filament-versionable/pull/32
+* Add Laravel 12 support by @vblinden in https://github.com/mansoorkhan96/filament-versionable/pull/33
+
+### New Contributors
+
+* @vblinden made their first contribution in https://github.com/mansoorkhan96/filament-versionable/pull/33
+
+**Full Changelog**: https://github.com/mansoorkhan96/filament-versionable/compare/v0.0.12...v0.0.13
+
 ## v0.0.12 - 2024-12-10
 
 ### What's Changed
