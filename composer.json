@@ -1,15 +1,15 @@
 {
     "name": "mansoor/filament-versionable",
-    "description": "This is my package filament-versionable",
+    "description": "Effortlessly manage revisions of your Eloquent models in Filament.",
     "keywords": [
         "mansoor",
         "laravel",
         "filament-versionable"
     ],
-    "homepage": "https://github.com/mansoor/filament-versionable",
+    "homepage": "https://github.com/mansoorkhan96/filament-versionable",
     "support": {
-        "issues": "https://github.com/mansoor/filament-versionable/issues",
-        "source": "https://github.com/mansoor/filament-versionable"
+        "issues": "https://github.com/mansoorkhan96/filament-versionable/issues",
+        "source": "https://github.com/mansoorkhan96/filament-versionable"
     },
     "license": "MIT",
     "authors": [
