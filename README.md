@@ -31,10 +31,20 @@ Then, publish the config file and migrations:
 php artisan vendor:publish --provider="Overtrue\LaravelVersionable\ServiceProvider"
 ```
 
-Finally, run the migration:
+Run the migration command:
 
 ```bash
 php artisan migrate
+```
+
+> [!IMPORTANT]
+> If you have not set up a custom theme and are using Filament Panels follow the instructions in the [Filament Docs](https://filamentphp.com/docs/4.x/styling/overview#creating-a-custom-theme) first.
+
+After setting up a custom theme add the plugin's views and css to your theme css file.
+
+```css
+@import '../../../../vendor/mansoor/filament-versionable/resources/css/plugin.css';
+@source '../../../../vendor/mansoor/filament-versionable/resources/**/*.blade.php';
 ```
 
 ## Usage
