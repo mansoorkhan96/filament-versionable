@@ -2,8 +2,6 @@
 
 namespace Mansoor\FilamentVersionable;
 
-use Filament\Support\Assets\Css;
-use Filament\Support\Facades\FilamentAsset;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -20,12 +18,5 @@ class FilamentVersionableServiceProvider extends PackageServiceProvider
             ->hasTranslations()
             ->hasAssets()
             ->hasViews();
-    }
-
-    public function packageBooted(): void
-    {
-        FilamentAsset::register([
-            Css::make(static::$name, __DIR__.'/../resources/dist/filament-versionable.css')->loadedOnRequest(),
-        ], static::$name);
     }
 }

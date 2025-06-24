@@ -1,5 +1,5 @@
 <div align="center">
-    <img width="100px" height="100px" src="icon.png"/>
+    <img width="100px" height="100px" src="./resources/icon.png"/>
 </div>
 
 # Filament Versionable
@@ -15,7 +15,7 @@ Efforlessly manage your Eloquent model revisions in Filament. It includes:
 - A list of Revisions by different users
 - A Restore action to restore the model to any state
 
-![](./screenshot.png)
+![](./resources/screenshot.png)
 
 ## Installation
 

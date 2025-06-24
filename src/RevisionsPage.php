@@ -8,7 +8,6 @@ use Filament\Resources\Pages\Page;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\HtmlString;
 use Livewire\Attributes\Computed;
 use Livewire\WithPagination;
 use Overtrue\LaravelVersionable\Version;
@@ -20,7 +19,7 @@ class RevisionsPage extends Page
 
     public Version|Model|null $version;
 
-    protected static string $view = 'filament-versionable::revisions-page';
+    protected string $view = 'filament-versionable::revisions-page';
 
     public function shouldStripTags(): bool
     {
@@ -136,13 +135,7 @@ class RevisionsPage extends Page
             return static::$title;
         }
 
-        $url = static::$resource::getUrl('edit', ['record' => $this->getRecord()]);
-
-        return new HtmlString(__('filament-versionable::page.title', [
-            'title' => "<a href=\"{$url}\" class=\"text-primary-500\">
-                {$this->getRecordTitle()}
-            </a>",
-        ]));
+        return $this->getRecordTitle();
     }
 
     public function getRevisionsListPerPage(): int

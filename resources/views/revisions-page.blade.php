@@ -1,5 +1,5 @@
 <x-filament-panels::page>
-    <div x-load-css="[@js(\Filament\Support\Facades\FilamentAsset::getStyleHref('filament-versionable', 'filament-versionable'))]">
+    <div>
         <div class="mb-4 grid grid-cols-1 gap-6 lg:grid-cols-4">
             <div class="col-span-3 flex justify-between">
                 {{ $this->previousVersionAction }}
@@ -9,7 +9,7 @@
         </div>
 
         <div class="grid grid-cols-1 gap-6 lg:grid-cols-4">
-            <div class="col-span-3">
+            <div class="lg:col-span-3">
                 <x-filament::section compact>
                     <x-slot name="heading">
                         <div class="flex items-center justify-between">
@@ -48,9 +48,9 @@
                         </div>
                     </x-slot>
 
-                    <div class="flex flex-col gap-2 divide-y divide-gray-200 dark:divide-white/10">
+                    <div class="space-y-6 divide-y-1 divide-gray-200 dark:divide-white/10">
                         @foreach ($this->diff as $fieldName => $diff)
-                            <div class="py-5">
+                            <div class="pb-6">
                                 <p class="mb-2 px-1 text-lg font-medium capitalize">
                                     {{ $fieldName }}
                                 </p>
@@ -62,7 +62,7 @@
                 </x-filament::section>
             </div>
 
-            <div class="col-span-1">
+            <div class="lg:col-span-1">
                 <x-filament::section compact>
                     <x-slot name="heading">
                         {{ __('filament-versionable::page.revisions_list') }}

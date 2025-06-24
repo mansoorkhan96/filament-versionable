@@ -2,7 +2,7 @@
 
 namespace Mansoor\FilamentVersionable\Table;
 
-use Filament\Tables\Actions\Action;
+use Filament\Actions\Action;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
 
