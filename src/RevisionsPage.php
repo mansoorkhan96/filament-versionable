@@ -149,4 +149,8 @@ class RevisionsPage extends Page
     {
         return 10;
     }
+
+    public function currentlyValidatingForm( ?\Filament\Forms\ComponentContainer $form ): void
+    {
+    }
 }
