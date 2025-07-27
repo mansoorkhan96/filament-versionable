@@ -3,6 +3,8 @@
 namespace Mansoor\FilamentVersionable;
 
 use Filament\Actions\Action;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Contracts\HasForms;
 use Filament\Resources\Pages\Concerns\InteractsWithRecord;
 use Filament\Resources\Pages\Page;
 use Illuminate\Contracts\Support\Htmlable;
@@ -13,8 +15,9 @@ use Livewire\Attributes\Computed;
 use Livewire\WithPagination;
 use Overtrue\LaravelVersionable\Version;
 
-class RevisionsPage extends Page
+class RevisionsPage extends Page implements HasForms
 {
+    use InteractsWithForms;
     use InteractsWithRecord;
     use WithPagination;
 
