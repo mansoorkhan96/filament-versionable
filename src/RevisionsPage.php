@@ -75,7 +75,7 @@ class RevisionsPage extends Page
             ->paginate($this->getRevisionsListPerPage());
     }
 
-    public function showVersion(int $versionId): void
+    public function showVersion(int|string $versionId): void
     {
         $this->version = $this->record->getVersion($versionId);
     }
