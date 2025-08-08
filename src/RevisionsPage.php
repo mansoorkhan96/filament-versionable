@@ -79,7 +79,7 @@ class RevisionsPage extends Page implements HasForms
             ->paginate($this->getRevisionsListPerPage());
     }
 
-    public function showVersion(int $versionId): void
+    public function showVersion(int|string $versionId): void
     {
         $this->version = $this->record->getVersion($versionId);
     }

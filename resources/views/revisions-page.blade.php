@@ -74,7 +74,7 @@
                     >
                         @foreach ($this->revisionsList as $version)
                             <li
-                                wire:click="showVersion({{ $version->id }})"
+                                wire:click="showVersion(@js($version->getKey()))"
                                 @class([
                                     'pb-4' => $loop->first && !$loop->last,
                                     'pt-4' => $loop->last && !$loop->first,
