@@ -4,8 +4,6 @@ use Mansoor\FilamentVersionable\Tests\Fixtures\Models\Post;
 use Mansoor\FilamentVersionable\Tests\Fixtures\Models\User;
 use Mansoor\FilamentVersionable\Tests\Fixtures\Resources\PostResource\Pages\PostRevisions;
 
-use function Pest\Livewire\livewire;
-
 beforeEach(function () {
     $this->user = createUser();
     $this->actingAs($this->user);

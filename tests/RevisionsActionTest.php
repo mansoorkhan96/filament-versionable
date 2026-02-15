@@ -6,8 +6,6 @@ use Mansoor\FilamentVersionable\Tests\Fixtures\Resources\PostResource;
 use Mansoor\FilamentVersionable\Tests\Fixtures\Resources\PostResource\Pages\EditPost;
 use Mansoor\FilamentVersionable\Tests\Fixtures\Resources\PostResource\Pages\ListPosts;
 
-use function Pest\Livewire\livewire;
-
 beforeEach(function () {
     $this->user = createUser();
     $this->actingAs($this->user);
