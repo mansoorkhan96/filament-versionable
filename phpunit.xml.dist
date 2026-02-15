@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.2/phpunit.xsd"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/12.5/phpunit.xsd"
     backupGlobals="false"
     bootstrap="vendor/autoload.php"
     colors="true"
@@ -20,6 +20,8 @@
             <directory>tests</directory>
         </testsuite>
     </testsuites>
+    <!-- Coverage reports require a coverage driver (Xdebug/PCOV) -->
+    <!--
     <coverage>
         <report>
             <html outputDirectory="build/coverage"/>
@@ -27,9 +29,7 @@
             <clover outputFile="build/logs/clover.xml"/>
         </report>
     </coverage>
-    <logging>
-        <junit outputFile="build/report.junit.xml"/>
-    </logging>
+    -->
     <source>
         <include>
             <directory suffix=".php">./src</directory>
