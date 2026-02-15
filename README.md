@@ -5,8 +5,8 @@
 # Filament Versionable
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/mansoor/filament-versionable.svg?style=flat-square)](https://packagist.org/packages/mansoor/filament-versionable)
-[![run-tests](https://github.com/mansoorkhan96/filament-versionable/actions/workflows/run-tests.yml/badge.svg)](https://github.com/mansoorkhan96/filament-versionable/actions/workflows/run-tests.yml)
-[![GitHub Code Style Action Status](https://github.com/mansoorkhan96/filament-versionable/actions/workflows/fix-php-code-styling.yml/badge.svg)](https://github.com/mansoorkhan96/filament-versionable/actions/workflows/fix-php-code-styling.yml)
+[![Tests](https://github.com/mansoorkhan96/filament-versionable/actions/workflows/run-tests.yml/badge.svg)](https://github.com/mansoorkhan96/filament-versionable/actions/workflows/run-tests.yml)
+[![Code Style](https://github.com/mansoorkhan96/filament-versionable/actions/workflows/fix-php-code-styling.yml/badge.svg)](https://github.com/mansoorkhan96/filament-versionable/actions/workflows/fix-php-code-styling.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/mansoor/filament-versionable.svg?style=flat-square)](https://packagist.org/packages/mansoor/filament-versionable)
 
 Efforlessly manage your Eloquent model revisions in Filament. It includes:
