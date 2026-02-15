@@ -1,0 +1,10 @@
+includes:
+    - ./vendor/larastan/larastan/extension.neon
+    - phpstan-baseline.neon.dist
+
+parameters:
+    level: 6
+    paths:
+        - src
+    tmpDir: build/phpstan
+    checkModelProperties: true
