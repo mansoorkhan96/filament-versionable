@@ -6,4 +6,5 @@ return [
     'revision_by' => 'Revize od :name',
     'revisions_list' => 'Seznam revizí',
     'anonymous_user' => 'Anonymní uživatel',
+    'no_revisions' => 'Žádné revize nejsou k dispozici',
 ];

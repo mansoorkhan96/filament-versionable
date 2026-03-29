@@ -6,4 +6,5 @@ return [
     'revision_by' => 'Revision von :name',
     'revisions_list' => 'Revisionsliste',
     'anonymous_user' => 'Anonymer Benutzer',
+    'no_revisions' => 'Keine Revisionen verfügbar',
 ];
