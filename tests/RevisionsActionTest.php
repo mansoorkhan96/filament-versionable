@@ -1,14 +1,13 @@
 <?php
 
 use Filament\Actions\Testing\TestAction;
+use Mansoor\FilamentVersionable\Page\RevisionsAction;
 use Mansoor\FilamentVersionable\Tests\Fixtures\Models\Category;
 use Mansoor\FilamentVersionable\Tests\Fixtures\Models\Post;
 use Mansoor\FilamentVersionable\Tests\Fixtures\Resources\NestedPostResource;
 use Mansoor\FilamentVersionable\Tests\Fixtures\Resources\PostResource;
 use Mansoor\FilamentVersionable\Tests\Fixtures\Resources\PostResource\Pages\EditPost;
 use Mansoor\FilamentVersionable\Tests\Fixtures\Resources\PostResource\Pages\ListPosts;
-use Mansoor\FilamentVersionable\Tests\Fixtures\Resources\NestedPostResource\Pages\EditNestedPost;
-use Mansoor\FilamentVersionable\Tests\Fixtures\Resources\NestedPostResource\Pages\ListNestedPosts;
 
 beforeEach(function () {
     $this->user = createUser();
@@ -53,7 +52,7 @@ describe('Page RevisionsAction', function () {
         // The badge should show versions count - 1
         expect($post->versions()->count())->toBe(3);
 
-        $action = new \Mansoor\FilamentVersionable\Page\RevisionsAction('revisions');
+        $action = new RevisionsAction('revisions');
         $badgeCount = $post->versions()->count() - 1;
         expect($badgeCount)->toBe(2);
     });

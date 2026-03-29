@@ -29,7 +29,7 @@ class RevisionsAction extends Action
         $this->badge(fn (Model $record) => $record->versions()->count() - 1);
 
         $this->url(function (Model $record, Component $livewire) {
-            /** @var Resource $resource */
+            /** @var resource $resource */
             $resource = app()->make($livewire::getResource());
 
             $parameters = ['record' => $record];

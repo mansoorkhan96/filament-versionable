@@ -4,6 +4,7 @@ use Mansoor\FilamentVersionable\Tests\Fixtures\Models\Category;
 use Mansoor\FilamentVersionable\Tests\Fixtures\Models\Post;
 use Mansoor\FilamentVersionable\Tests\Fixtures\Models\User;
 use Mansoor\FilamentVersionable\Tests\Fixtures\Resources\NestedPostResource;
+use Mansoor\FilamentVersionable\Tests\Fixtures\Resources\NestedPostResource\Pages\NestedPostRevisions;
 use Mansoor\FilamentVersionable\Tests\Fixtures\Resources\PostResource\Pages\PostRevisions;
 
 beforeEach(function () {
@@ -138,7 +139,7 @@ it('restore action requires confirmation', function () {
     livewire(PostRevisions::class, ['record' => $post->getKey()])
         ->mountAction('restoreVersion')
         ->assertActionMounted('restoreVersion');
-        // ->assertMountedActionModalSee(__('filament-versionable::actions.restore.modal_description'));
+    // ->assertMountedActionModalSee(__('filament-versionable::actions.restore.modal_description'));
 });
 
 it('shows the revision author name', function () {
@@ -313,7 +314,7 @@ describe('Nested RevisionsPage', function () {
 
         // Instantiate the page component and set up its state manually
         // to test the URL generation logic in restoreVersion()
-        $page = new \Mansoor\FilamentVersionable\Tests\Fixtures\Resources\NestedPostResource\Pages\NestedPostRevisions;
+        $page = new NestedPostRevisions;
         $page->record = $post;
         $page->parentRecord = $category;
         $page->version = $post->latestVersion;
