@@ -19,32 +19,6 @@ it('can mount the revisions page', function () {
         ->assertOk();
 });
 
-it('shows empty state when record has only one version (legacy)', function () {
-    $post = Post::create([
-        'title' => 'Only Version',
-        'content' => 'Only Content',
-        'user_id' => $this->user->id,
-    ]);
-
-    livewire(PostRevisions::class, ['record' => $post->getKey()])
-        ->assertOk()
-        ->assertSee('No revisions available');
-});
-
-it('shows empty state when record has no versions (legacy)', function () {
-    Post::withoutVersion(function () {
-        $this->post = Post::create([
-            'title' => 'No Versions',
-            'content' => 'No Content',
-            'user_id' => $this->user->id,
-        ]);
-    });
-
-    livewire(PostRevisions::class, ['record' => $this->post->getKey()])
-        ->assertOk()
-        ->assertSee('No revisions available');
-});
-
 it('shows empty state when record has only one version', function () {
     $post = Post::create([
         'title' => 'Only Version',
