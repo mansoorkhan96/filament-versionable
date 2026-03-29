@@ -105,6 +105,14 @@ class TestCase extends Orchestra
             $table->timestamps();
         });
 
+        Schema::create('pages', function (Blueprint $table) {
+            $table->id();
+            $table->string('title');
+            $table->string('slug');
+            $table->text('content')->nullable();
+            $table->timestamps();
+        });
+
         // Load versions table migrations from overtrue/laravel-versionable
         $this->loadMigrationsFrom(__DIR__.'/../vendor/overtrue/laravel-versionable/migrations');
     }

@@ -16,6 +16,7 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Mansoor\FilamentVersionable\Tests\Fixtures\Resources\CategoryResource;
 use Mansoor\FilamentVersionable\Tests\Fixtures\Resources\NestedPostResource;
+use Mansoor\FilamentVersionable\Tests\Fixtures\Resources\PageResource;
 use Mansoor\FilamentVersionable\Tests\Fixtures\Resources\PostResource;
 
 class AdminPanelProvider extends PanelProvider
@@ -27,6 +28,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->resources([
+                PageResource::class,
                 PostResource::class,
                 CategoryResource::class,
                 NestedPostResource::class,
