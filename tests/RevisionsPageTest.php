@@ -43,6 +43,32 @@ it('aborts with 404 when record has no versions', function () {
         ->assertNotFound();
 });
 
+it('shows empty state when record has only one version', function () {
+    $post = Post::create([
+        'title' => 'Only Version',
+        'content' => 'Only Content',
+        'user_id' => $this->user->id,
+    ]);
+
+    livewire(PostRevisions::class, ['record' => $post->getKey()])
+        ->assertOk()
+        ->assertSee('No revisions available');
+});
+
+it('shows empty state when record has no versions', function () {
+    Post::withoutVersion(function () {
+        $this->post = Post::create([
+            'title' => 'No Versions',
+            'content' => 'No Content',
+            'user_id' => $this->user->id,
+        ]);
+    });
+
+    livewire(PostRevisions::class, ['record' => $this->post->getKey()])
+        ->assertOk()
+        ->assertSee('No revisions available');
+});
+
 it('shows the latest version by default', function () {
     $post = createPostWithVersions($this->user, 3);
 
