@@ -134,10 +134,10 @@
         </div>
     </div>
     @else
-    <div class="flex items-center justify-center p-6">
-        <p class="text-sm text-gray-500 dark:text-gray-400">
-            {{ __('filament-versionable::page.no_revisions') }}
-        </p>
-    </div>
+        <x-filament::empty-state
+            :heading="__('filament-versionable::page.no_revisions')"
+            icon="heroicon-o-clock"
+            icon-color="gray"
+        />
     @endif
 </x-filament-panels::page>
