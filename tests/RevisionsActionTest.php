@@ -1,10 +1,14 @@
 <?php
 
 use Filament\Actions\Testing\TestAction;
+use Mansoor\FilamentVersionable\Tests\Fixtures\Models\Category;
 use Mansoor\FilamentVersionable\Tests\Fixtures\Models\Post;
+use Mansoor\FilamentVersionable\Tests\Fixtures\Resources\NestedPostResource;
 use Mansoor\FilamentVersionable\Tests\Fixtures\Resources\PostResource;
 use Mansoor\FilamentVersionable\Tests\Fixtures\Resources\PostResource\Pages\EditPost;
 use Mansoor\FilamentVersionable\Tests\Fixtures\Resources\PostResource\Pages\ListPosts;
+use Mansoor\FilamentVersionable\Tests\Fixtures\Resources\NestedPostResource\Pages\EditNestedPost;
+use Mansoor\FilamentVersionable\Tests\Fixtures\Resources\NestedPostResource\Pages\ListNestedPosts;
 
 beforeEach(function () {
     $this->user = createUser();
@@ -81,6 +85,73 @@ describe('Page RevisionsAction', function () {
 
         livewire(EditPost::class, ['record' => $post->getKey()])
             ->assertActionHasUrl('revisions', $expectedUrl);
+    });
+});
+
+describe('Nested Page RevisionsAction', function () {
+    it('has a URL pointing to the nested revisions page', function () {
+        $category = Category::create(['name' => 'Test Category']);
+        $post = Post::create([
+            'title' => 'Version 1',
+            'content' => 'Content 1',
+            'user_id' => $this->user->id,
+            'category_id' => $category->id,
+        ]);
+
+        $post->update(['title' => 'Version 2']);
+
+        $expectedUrl = NestedPostResource::getUrl('revisions', [
+            'record' => $post,
+            'category' => $category,
+        ]);
+
+        // The expected URL must contain the parent category ID in the path
+        expect($expectedUrl)->toContain("/categories/{$category->getKey()}/");
+
+        // Visit the real Filament edit page URL to test in a nested route context
+        $editUrl = NestedPostResource::getUrl('edit', [
+            'record' => $post,
+            'category' => $category,
+        ]);
+
+        // The edit page should render without errors and the revisions action
+        // URL should include the parent category parameter
+        $this->get($editUrl)
+            ->assertOk()
+            ->assertSee($expectedUrl);
+    });
+});
+
+describe('Nested Table RevisionsAction', function () {
+    it('has a URL pointing to the nested revisions page from table', function () {
+        $category = Category::create(['name' => 'Test Category']);
+        $post = Post::create([
+            'title' => 'Version 1',
+            'content' => 'Content 1',
+            'user_id' => $this->user->id,
+            'category_id' => $category->id,
+        ]);
+
+        $post->update(['title' => 'Version 2']);
+
+        $expectedUrl = NestedPostResource::getUrl('revisions', [
+            'record' => $post,
+            'category' => $category,
+        ]);
+
+        // The expected URL must contain the parent category ID in the path
+        expect($expectedUrl)->toContain("/categories/{$category->getKey()}/");
+
+        // Visit the real Filament list page URL to test in a nested route context
+        $listUrl = NestedPostResource::getUrl('index', [
+            'category' => $category,
+        ]);
+
+        // The list page should render without errors and the revisions action
+        // URL should include the parent category parameter
+        $this->get($listUrl)
+            ->assertOk()
+            ->assertSee($expectedUrl);
     });
 });
 

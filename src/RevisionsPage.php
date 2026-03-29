@@ -121,7 +121,19 @@ class RevisionsPage extends Page
     {
         $this->version->previousVersion()->revert();
 
-        $this->redirect(static::$resource::getUrl('edit', ['record' => $this->getRecord()]));
+        $parameters = ['record' => $this->getRecord()];
+
+        $parentRegistration = static::getResource()::getParentResourceRegistration();
+
+        if ($parentRegistration) {
+            $parentRecord = $this->getParentRecord();
+
+            if ($parentRecord) {
+                $parameters[$parentRegistration->getParentRouteParameterName()] = $parentRecord;
+            }
+        }
+
+        $this->redirect(static::$resource::getUrl('edit', $parameters));
     }
 
     protected function authorizeAccess(): void

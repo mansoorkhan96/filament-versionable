@@ -91,9 +91,16 @@ class TestCase extends Orchestra
             $table->timestamps();
         });
 
+        Schema::create('categories', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->timestamps();
+        });
+
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('category_id')->nullable();
             $table->string('title');
             $table->text('content')->nullable();
             $table->json('metadata')->nullable();

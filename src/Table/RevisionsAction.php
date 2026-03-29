@@ -3,6 +3,7 @@
 namespace Mansoor\FilamentVersionable\Table;
 
 use Filament\Actions\Action;
+use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
 
@@ -26,10 +27,22 @@ class RevisionsAction extends Action
         $this->badge(fn (Model $record) => $record->versions()->count() - 1);
 
         $this->url(function (Model $record, Component $livewire) {
-            /** @var Filament\Resources\Resource */
+            /** @var Resource $resource */
             $resource = app()->make($livewire::getResource());
 
-            return $resource::getUrl('revisions', ['record' => $record]);
+            $parameters = ['record' => $record];
+
+            $parentRegistration = $resource::getParentResourceRegistration();
+
+            if ($parentRegistration && method_exists($livewire, 'getParentRecord')) {
+                $parentRecord = $livewire->getParentRecord();
+
+                if ($parentRecord) {
+                    $parameters[$parentRegistration->getParentRouteParameterName()] = $parentRecord;
+                }
+            }
+
+            return $resource::getUrl('revisions', $parameters);
         });
     }
 }
