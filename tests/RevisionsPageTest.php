@@ -19,7 +19,7 @@ it('can mount the revisions page', function () {
         ->assertOk();
 });
 
-it('aborts with 404 when record has only one version', function () {
+it('shows empty state when record has only one version (legacy)', function () {
     $post = Post::create([
         'title' => 'Only Version',
         'content' => 'Only Content',
@@ -27,10 +27,11 @@ it('aborts with 404 when record has only one version', function () {
     ]);
 
     livewire(PostRevisions::class, ['record' => $post->getKey()])
-        ->assertNotFound();
+        ->assertOk()
+        ->assertSee('No revisions available');
 });
 
-it('aborts with 404 when record has no versions', function () {
+it('shows empty state when record has no versions (legacy)', function () {
     Post::withoutVersion(function () {
         $this->post = Post::create([
             'title' => 'No Versions',
@@ -40,7 +41,8 @@ it('aborts with 404 when record has no versions', function () {
     });
 
     livewire(PostRevisions::class, ['record' => $this->post->getKey()])
-        ->assertNotFound();
+        ->assertOk()
+        ->assertSee('No revisions available');
 });
 
 it('shows empty state when record has only one version', function () {

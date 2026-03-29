@@ -45,11 +45,14 @@ class RevisionsPage extends Page
     {
         $this->record = $this->resolveRecord($record);
 
-        abort_if($this->record->versions()->count() <= 1, 404);
+        $this->authorizeAccess();
 
         $this->version = $this->record->latestVersion;
+    }
 
-        $this->authorizeAccess();
+    public function hasRevisions(): bool
+    {
+        return $this->record->versions()->count() > 1;
     }
 
     #[Computed]
@@ -67,9 +70,13 @@ class RevisionsPage extends Page
     #[Computed]
     public function revisionsList(): LengthAwarePaginator
     {
-        return $this->record
-            ->versions()
-            ->whereNot('id', $this->record->firstVersion->id)
+        $query = $this->record->versions();
+
+        if ($firstVersion = $this->record->firstVersion) {
+            $query->whereNot('id', $firstVersion->id);
+        }
+
+        return $query
             ->with('user')
             ->latest()
             ->paginate($this->getRevisionsListPerPage());
