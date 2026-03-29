@@ -3,7 +3,7 @@
 namespace Mansoor\FilamentVersionable\Tests\Fixtures\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Overtrue\LaravelVersionable\Versionable;
+use Mansoor\FilamentVersionable\Versionable;
 use Overtrue\LaravelVersionable\VersionStrategy;
 
 class Page extends Model

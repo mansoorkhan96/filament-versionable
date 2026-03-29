@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Database\Eloquent\MissingAttributeException;
 use Illuminate\Database\Eloquent\Model;
 use Mansoor\FilamentVersionable\Tests\Fixtures\Models\Page;
 
@@ -9,19 +8,29 @@ beforeEach(function () {
     $this->actingAs($this->user);
 });
 
-// This test demonstrates the MissingAttributeException bug:
-// When a model uses the Versionable trait but does NOT have a `user_id` column
-// in its database schema, and Model::preventAccessingMissingAttributes() is enabled,
-// the Versionable trait's getVersionUserId() method calls getAttribute('user_id')
-// which throws MissingAttributeException instead of returning null.
-//
-// This test is expected to fail until the fix is applied.
-it('throws MissingAttributeException when creating a versionable model without user_id column', function () {
+it('does not throw when creating a versionable model without user_id column', function () {
     Model::preventAccessingMissingAttributes();
 
-    Page::create([
+    $page = Page::create([
         'title' => 'Test Page',
         'slug' => 'test-page',
         'content' => 'Some content',
     ]);
-})->throws(MissingAttributeException::class);
+
+    expect($page)->toBeInstanceOf(Page::class);
+    expect($page->versions)->toHaveCount(1);
+    expect($page->versions->first()->user_id)->toBe($this->user->id);
+});
+
+it('falls back to auth id when model has no user_id attribute', function () {
+    $page = Page::make(['title' => 'Test', 'slug' => 'test', 'content' => 'c']);
+
+    expect($page->getVersionUserId())->toBe($this->user->id);
+});
+
+it('returns model user_id when the attribute is present', function () {
+    $page = Page::make(['title' => 'Test', 'slug' => 'test', 'content' => 'c']);
+    $page->user_id = 42;
+
+    expect($page->getVersionUserId())->toBe(42);
+});
