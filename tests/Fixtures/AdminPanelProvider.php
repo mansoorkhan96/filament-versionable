@@ -14,6 +14,8 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Mansoor\FilamentVersionable\Tests\Fixtures\Resources\CategoryResource;
+use Mansoor\FilamentVersionable\Tests\Fixtures\Resources\NestedPostResource;
 use Mansoor\FilamentVersionable\Tests\Fixtures\Resources\PostResource;
 
 class AdminPanelProvider extends PanelProvider
@@ -26,6 +28,8 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->resources([
                 PostResource::class,
+                CategoryResource::class,
+                NestedPostResource::class,
             ])
             ->middleware([
                 EncryptCookies::class,

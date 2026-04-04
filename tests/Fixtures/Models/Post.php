@@ -10,7 +10,7 @@ class Post extends Model
 {
     use Versionable;
 
-    protected $fillable = ['title', 'content', 'metadata', 'user_id'];
+    protected $fillable = ['title', 'content', 'metadata', 'user_id', 'category_id'];
 
     protected $versionable = ['title', 'content', 'metadata'];
 
@@ -32,5 +32,10 @@ class Post extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 }

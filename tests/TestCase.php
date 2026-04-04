@@ -10,10 +10,10 @@ use Filament\Forms\FormsServiceProvider;
 use Filament\Infolists\InfolistsServiceProvider;
 use Filament\Notifications\NotificationsServiceProvider;
 use Filament\Schemas\SchemasServiceProvider;
+use Filament\Support\Livewire\Partials\DataStoreOverride;
 use Filament\Support\SupportServiceProvider;
 use Filament\Tables\TablesServiceProvider;
 use Filament\Widgets\WidgetsServiceProvider;
-use Filament\Support\Livewire\Partials\DataStoreOverride;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
@@ -70,7 +70,7 @@ class TestCase extends Orchestra
             'prefix' => '',
         ]);
 
-        config()->set('app.key', 'base64:' . base64_encode(random_bytes(32)));
+        config()->set('app.key', 'base64:'.base64_encode(random_bytes(32)));
         config()->set('auth.providers.users.model', User::class);
         config()->set('versionable.user_model', User::class);
 
@@ -91,9 +91,16 @@ class TestCase extends Orchestra
             $table->timestamps();
         });
 
+        Schema::create('categories', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->timestamps();
+        });
+
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('category_id')->nullable();
             $table->string('title');
             $table->text('content')->nullable();
             $table->json('metadata')->nullable();
@@ -101,6 +108,6 @@ class TestCase extends Orchestra
         });
 
         // Load versions table migrations from overtrue/laravel-versionable
-        $this->loadMigrationsFrom(__DIR__ . '/../vendor/overtrue/laravel-versionable/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/../vendor/overtrue/laravel-versionable/migrations');
     }
 }
