@@ -11,16 +11,6 @@ parameters:
 			path: src/Page/RevisionsAction.php
 
 		-
-			message: "#^Call to static method getUrl\\(\\) on an unknown class Mansoor\\\\FilamentVersionable\\\\Page\\\\Filament\\\\Resources\\\\Resource\\.$#"
-			count: 1
-			path: src/Page/RevisionsAction.php
-
-		-
-			message: "#^PHPDoc tag @var contains unknown class Mansoor\\\\FilamentVersionable\\\\Page\\\\Filament\\\\Resources\\\\Resource\\.$#"
-			count: 1
-			path: src/Page/RevisionsAction.php
-
-		-
 			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$latestVersion\\.$#"
 			count: 1
 			path: src/RevisionsPage.php
@@ -82,15 +72,5 @@ parameters:
 
 		-
 			message: "#^Call to an undefined static method Livewire\\\\Component\\:\\:getResource\\(\\)\\.$#"
-			count: 1
-			path: src/Table/RevisionsAction.php
-
-		-
-			message: "#^Call to static method getUrl\\(\\) on an unknown class Mansoor\\\\FilamentVersionable\\\\Table\\\\Filament\\\\Resources\\\\Resource\\.$#"
-			count: 1
-			path: src/Table/RevisionsAction.php
-
-		-
-			message: "#^PHPDoc tag @var contains unknown class Mansoor\\\\FilamentVersionable\\\\Table\\\\Filament\\\\Resources\\\\Resource\\.$#"
 			count: 1
 			path: src/Table/RevisionsAction.php

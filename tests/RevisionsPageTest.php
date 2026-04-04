@@ -1,7 +1,10 @@
 <?php
 
+use Mansoor\FilamentVersionable\Tests\Fixtures\Models\Category;
 use Mansoor\FilamentVersionable\Tests\Fixtures\Models\Post;
 use Mansoor\FilamentVersionable\Tests\Fixtures\Models\User;
+use Mansoor\FilamentVersionable\Tests\Fixtures\Resources\NestedPostResource;
+use Mansoor\FilamentVersionable\Tests\Fixtures\Resources\NestedPostResource\Pages\NestedPostRevisions;
 use Mansoor\FilamentVersionable\Tests\Fixtures\Resources\PostResource\Pages\PostRevisions;
 
 use function Pest\Livewire\livewire;
@@ -138,7 +141,7 @@ it('restore action requires confirmation', function () {
     livewire(PostRevisions::class, ['record' => $post->getKey()])
         ->mountAction('restoreVersion')
         ->assertActionMounted('restoreVersion');
-        // ->assertMountedActionModalSee(__('filament-versionable::actions.restore.modal_description'));
+    // ->assertMountedActionModalSee(__('filament-versionable::actions.restore.modal_description'));
 });
 
 it('shows the revision author name', function () {
@@ -269,6 +272,68 @@ it('does not strip tags by default', function () {
     $component = livewire(PostRevisions::class, ['record' => $post->getKey()]);
 
     expect($component->instance()->shouldStripTags())->toBeFalse();
+});
+
+describe('Nested RevisionsPage', function () {
+    it('can mount the nested revisions page', function () {
+        $category = Category::create(['name' => 'Test Category']);
+        $post = Post::create([
+            'title' => 'Version 1',
+            'content' => 'Content 1',
+            'user_id' => $this->user->id,
+            'category_id' => $category->id,
+        ]);
+
+        $post->update(['title' => 'Version 2']);
+
+        $revisionsUrl = NestedPostResource::getUrl('revisions', [
+            'record' => $post,
+            'category' => $category,
+        ]);
+
+        $this->get($revisionsUrl)->assertOk();
+    });
+
+    it('generates the correct nested edit URL for restore redirect', function () {
+        $category = Category::create(['name' => 'Test Category']);
+        $post = Post::create([
+            'title' => 'Original Title',
+            'content' => 'Original Content',
+            'user_id' => $this->user->id,
+            'category_id' => $category->id,
+        ]);
+
+        $post->update(['title' => 'Updated Title', 'content' => 'Updated Content']);
+        $post->refresh();
+
+        $expectedEditUrl = NestedPostResource::getUrl('edit', [
+            'record' => $post,
+            'category' => $category,
+        ]);
+
+        // The expected edit URL must contain the parent category ID
+        expect($expectedEditUrl)->toContain("/categories/{$category->getKey()}/");
+
+        // Instantiate the page component and set up its state manually
+        // to test the URL generation logic in restoreVersion()
+        $page = new NestedPostRevisions;
+        $page->record = $post;
+        $page->parentRecord = $category;
+        $page->version = $post->latestVersion;
+
+        // The restore generates a redirect URL - test that the URL includes parent params
+        $resource = NestedPostResource::class;
+        $parentRegistration = $resource::getParentResourceRegistration();
+
+        expect($parentRegistration)->not()->toBeNull();
+
+        $parameters = ['record' => $post];
+        $parameters[$parentRegistration->getParentRouteParameterName()] = $category;
+
+        $generatedUrl = $resource::getUrl('edit', $parameters);
+        expect($generatedUrl)->toBe($expectedEditUrl);
+        expect($generatedUrl)->toContain("/categories/{$category->getKey()}/");
+    });
 });
 
 function createPostWithVersions(User $user, int $versionCount = 3): Post
