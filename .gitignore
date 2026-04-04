@@ -15,3 +15,5 @@ vendor
 /.phpunit.cache
 phpstan-baseline.neon
 playground
+
+.context
