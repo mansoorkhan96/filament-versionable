@@ -83,7 +83,7 @@ describe('Nested RevisionsPage', function () {
             ->assertOk();
     });
 
-    it('aborts with 404 when record has only one version', function () {
+    it('shows empty state when record has only one version', function () {
         $post = Post::create([
             'title' => 'Only Version',
             'content' => 'Only Content',
@@ -91,11 +91,14 @@ describe('Nested RevisionsPage', function () {
             'category_id' => $this->category->id,
         ]);
 
-        $this->get(nestedRevisionsUrl($post, $this->category))
-            ->assertNotFound();
+        NestedPostRevisions::$testParentRecord = $this->category;
+
+        livewire(NestedPostRevisions::class, ['record' => $post->getKey()])
+            ->assertOk()
+            ->assertSee('No revisions available');
     });
 
-    it('aborts with 404 when record has no versions', function () {
+    it('shows empty state when record has no versions', function () {
         Post::withoutVersion(function () {
             $this->post = Post::create([
                 'title' => 'No Versions',
@@ -105,8 +108,11 @@ describe('Nested RevisionsPage', function () {
             ]);
         });
 
-        $this->get(nestedRevisionsUrl($this->post, $this->category))
-            ->assertNotFound();
+        NestedPostRevisions::$testParentRecord = $this->category;
+
+        livewire(NestedPostRevisions::class, ['record' => $this->post->getKey()])
+            ->assertOk()
+            ->assertSee('No revisions available');
     });
 
     it('shows the latest version by default', function () {
