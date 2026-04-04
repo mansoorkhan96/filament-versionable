@@ -25,7 +25,6 @@ use Mansoor\FilamentVersionable\Tests\Fixtures\AdminPanelProvider;
 use Mansoor\FilamentVersionable\Tests\Fixtures\Models\User;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Overtrue\LaravelVersionable\ServiceProvider as VersionableServiceProvider;
-use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
 
 class TestCase extends Orchestra
 {
@@ -43,7 +42,6 @@ class TestCase extends Orchestra
     {
         return [
             ActionsServiceProvider::class,
-            BladeCaptureDirectiveServiceProvider::class,
             BladeHeroiconsServiceProvider::class,
             BladeIconsServiceProvider::class,
             FilamentServiceProvider::class,
