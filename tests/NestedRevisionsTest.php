@@ -9,6 +9,8 @@ use Mansoor\FilamentVersionable\Tests\Fixtures\Resources\NestedPostResource\Page
 use Mansoor\FilamentVersionable\Tests\Fixtures\Resources\NestedPostResource\Pages\ListNestedPosts;
 use Mansoor\FilamentVersionable\Tests\Fixtures\Resources\NestedPostResource\Pages\NestedPostRevisions;
 
+use function Pest\Livewire\livewire;
+
 beforeEach(function () {
     $this->user = createUser();
     $this->actingAs($this->user);
