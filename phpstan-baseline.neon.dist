@@ -61,7 +61,7 @@ parameters:
 			path: src/RevisionsPage.php
 
 		-
-			message: "#^Method Mansoor\\\\FilamentVersionable\\\\RevisionsPage\\:\\:revisionsList\\(\\) return type with generic class Illuminate\\\\Pagination\\\\LengthAwarePaginator does not specify its types\\: TKey, TValue$#"
+			message: "#^Method Mansoor\\\\FilamentVersionable\\\\RevisionsPage\\:\\:revisionsList\\(\\) return type with generic class Illuminate\\\\Pagination\\\\LengthAwarePaginator does not specify its types\\: TValue$#"
 			count: 1
 			path: src/RevisionsPage.php
 
