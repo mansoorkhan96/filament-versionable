@@ -59,6 +59,86 @@
                                 {!! $diff !!}
                             </div>
                         @endforeach
+
+                        @foreach ($this->relationDiffs as $relationChangeSet)
+                            <div class="pb-6">
+                                <div class="mb-2 flex flex-wrap items-center gap-x-3 gap-y-1 px-1">
+                                    <p class="text-lg font-medium capitalize">
+                                        {{ $relationChangeSet->label() }}
+                                    </p>
+
+                                    <span class="text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                                        {{ $relationChangeSet->typeLabel() }}
+                                    </span>
+
+                                    <span class="flex items-center gap-x-1.5">
+                                        @if (count($relationChangeSet->added) > 0)
+                                            <x-filament::badge color="success" size="xs">
+                                                + {{ count($relationChangeSet->added) }}
+                                            </x-filament::badge>
+                                        @endif
+
+                                        @if (count($relationChangeSet->updated) > 0)
+                                            <x-filament::badge color="warning" size="xs">
+                                                ~ {{ count($relationChangeSet->updated) }}
+                                            </x-filament::badge>
+                                        @endif
+
+                                        @if (count($relationChangeSet->removed) > 0)
+                                            <x-filament::badge color="danger" size="xs">
+                                                − {{ count($relationChangeSet->removed) }}
+                                            </x-filament::badge>
+                                        @endif
+
+                                        @if ($relationChangeSet->unchanged > 0)
+                                            <span class="text-xs text-gray-400 dark:text-gray-500">
+                                                {{ __('filament-versionable::page.relations.unchanged', ['count' => $relationChangeSet->unchanged]) }}
+                                            </span>
+                                        @endif
+                                    </span>
+                                </div>
+
+                                @if ($relationChangeSet->displayOnly)
+                                    <p class="mb-2 px-1 text-xs text-gray-500 dark:text-gray-400">
+                                        {{ __('filament-versionable::page.relations.display_only_hint') }}
+                                    </p>
+                                @endif
+
+                                @foreach ([...$relationChangeSet->added, ...$relationChangeSet->removed, ...$relationChangeSet->updated] as $recordChange)
+                                    <div class="mb-3 rounded-xl border border-gray-200 p-3 dark:border-white/10">
+                                        <div class="mb-2 flex items-center gap-x-2">
+                                            @if (in_array($recordChange, $relationChangeSet->added, true))
+                                                <x-filament::badge color="success" size="sm">
+                                                    {{ __('filament-versionable::page.relations.added') }}
+                                                </x-filament::badge>
+                                            @elseif (in_array($recordChange, $relationChangeSet->removed, true))
+                                                <x-filament::badge color="danger" size="sm">
+                                                    {{ __('filament-versionable::page.relations.removed') }}
+                                                </x-filament::badge>
+                                            @else
+                                                <x-filament::badge color="warning" size="sm">
+                                                    {{ __('filament-versionable::page.relations.updated') }}
+                                                </x-filament::badge>
+                                            @endif
+
+                                            <span class="text-sm font-medium">
+                                                {{ $recordChange->label() }}
+                                            </span>
+                                        </div>
+
+                                        @foreach ($recordChange->fields as $field => $payload)
+                                            <div class="mb-1">
+                                                <p class="px-1 text-sm font-medium capitalize text-gray-500 dark:text-gray-400">
+                                                    {{ str_replace('_', ' ', $field) }}
+                                                </p>
+
+                                                {!! $payload['html'] !!}
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endforeach
                     </div>
                 </x-filament::section>
             </div>

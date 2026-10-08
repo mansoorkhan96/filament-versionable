@@ -7,4 +7,12 @@ return [
     'revisions_list' => 'Revisions list',
     'anonymous_user' => 'Anonymous User',
     'no_revisions' => 'No revisions available',
+
+    'relations' => [
+        'added' => 'Added',
+        'removed' => 'Removed',
+        'updated' => 'Updated',
+        'unchanged' => ':count unchanged',
+        'display_only_hint' => 'This relationship is recorded for reference only and is not restored automatically.',
+    ],
 ];

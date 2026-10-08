@@ -2,6 +2,7 @@
 
 namespace Mansoor\FilamentVersionable;
 
+use Mansoor\FilamentVersionable\Support\RelationSnapshotManager;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -17,6 +18,12 @@ class FilamentVersionableServiceProvider extends PackageServiceProvider
             ->name(static::$name)
             ->hasTranslations()
             ->hasAssets()
-            ->hasViews();
+            ->hasViews()
+            ->hasMigrations('add_relations_to_versions_table');
+    }
+
+    public function packageBooted(): void
+    {
+        RelationSnapshotManager::registerEventHooks();
     }
 }

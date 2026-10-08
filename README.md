@@ -119,6 +119,88 @@ $table->actions([
 
 You are all set! Your app should store the model states and you can manage them in Filament.
 
+## Versioning Relationships
+
+By default only the model's own attributes are versioned. To also snapshot relationships (HasMany, HasOne, MorphMany, MorphOne, BelongsToMany, MorphToMany, and display-only BelongsTo / MorphTo / HasManyThrough / HasOneThrough), use the `HasVersionableRelations` concern and list the relationship names:
+
+```bash
+php artisan vendor:publish --tag="filament-versionable-migrations"
+php artisan migrate
+```
+
+```php
+use Mansoor\FilamentVersionable\Concerns\HasVersionableRelations;
+use Overtrue\LaravelVersionable\Versionable;
+
+class Post extends Model
+{
+    use Versionable;
+    use HasVersionableRelations;
+
+    protected $versionable = ['title', 'content'];
+
+    // Simple form: just list the relationship names.
+    protected array $versionableRelations = ['comments', 'tags'];
+}
+```
+
+### Per-relation configuration
+
+Every relationship can also be configured: what the revisions page shows, and how a snapshotted record is re-identified on restore when its primary key no longer matches (deleted and re-created rows, restores into another environment, ...):
+
+```php
+protected array $versionableRelations = [
+    'comments' => [
+        // Shown next to the record key on the revisions page instead of a bare
+        // "#5". Accepts an attribute name or a callable:
+        // fn (array $attributes, int|string $key) => string.
+        'title' => 'author',
+
+        // Which snapshot attributes to render on the revisions page
+        // (default: all of them).
+        'fields' => ['author', 'body'],
+
+        // Stable columns used to re-identify a row on restore when its
+        // primary key is gone (optional).
+        'identity' => ['author', 'body'],
+
+        // Re-create missing children with their original primary key when
+        // that key is still free (default: true).
+        'preserve_ids' => true,
+    ],
+
+    // Unconfigured relations keep the defaults.
+    'tags',
+];
+```
+
+Without any configuration a sensible title is guessed from common attribute
+names (`name`, `title`, `label`, `author`, `email`, `username`, `slug`), so
+rows never show a naked primary key.
+
+- Every created version stores a snapshot of the listed relationships, and the revisions page renders per-relation change sets (added / updated / removed records with field-level diffs, plus pivot column changes).
+- When **only** a relationship changes, Filament's attribute watcher would normally create no version at all — the plugin now records one automatically after Filament saves the record.
+- Restoring a revision automatically restores the relationship state as well. Each snapshotted record is resolved against the current database in tiers — always scoped to the relation's own constraint, so rows of other parents are never touched:
+    1. **Primary key** — the normal, untouched case (soft-deleted children are revived).
+    2. **Attribute fingerprint** — every snapshotted attribute matches exactly; covers rows that were deleted and re-created with the same data, and restores into environments where the same data has different keys.
+    3. **Identity columns** — the stable columns you designate via `'identity'`; covers rows that were legitimately edited since the snapshot.
+    4. **Re-create** — nothing identifiable: the child is re-created, with its original primary key when that key is still free and `preserve_ids` is enabled.
+- Children missing from the snapshot are removed, pivot relations are synced (including pivot columns, re-linked to re-created master records), and a `BelongsTo` foreign key pointing at a since re-created row is re-pointed automatically.
+- `MorphTo`, `HasManyThrough` and `HasOneThrough` are recorded for reference only — restoring them would either duplicate data owned by other records or is not directly writable, so their snapshots are never applied. A `BelongsTo` foreign key is still restored like any other versioned attribute when listed in `$versionable`.
+- Models that don't use the concern behave exactly as before.
+
+**Revisions page — per-relation change sets with field-level diffs:**
+
+![Relationship diff on the revisions page](.github/images/relationships-diff.png)
+
+**Automatic restore** — after restoring a revision, the edit form shows the relationships exactly as they were in that revision (removed children are gone, modified children are reverted):
+
+![Relationships automatically restored after revision restore](.github/images/relationships-auto-restored.png)
+
+**Removed records** are tracked too:
+
+![Removed relationship record badge](.github/images/relationships-removed.png)
+
 ## Customisation
 
 If you want to change the UI for Revisions page, you may publish the publish the views to do so.

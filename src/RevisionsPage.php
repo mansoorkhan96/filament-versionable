@@ -8,8 +8,12 @@ use Filament\Resources\Pages\Page;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Computed;
 use Livewire\WithPagination;
+use Mansoor\FilamentVersionable\Support\RelationChangeSet;
+use Mansoor\FilamentVersionable\Support\RelationDiff;
+use Mansoor\FilamentVersionable\Support\RelationSnapshotManager;
 use Overtrue\LaravelVersionable\Version;
 
 class RevisionsPage extends Page
@@ -65,6 +69,30 @@ class RevisionsPage extends Page
                 renderOptions: ['lineNumbers' => false, 'showHeader' => false, 'detailLevel' => 'word', 'spacesToNbsp' => false],
                 stripTags: $this->shouldStripTags()
             );
+    }
+
+    /**
+     * Per-relation change sets between the selected version and its
+     * predecessor, computed from the stored relationship snapshots.
+     *
+     * @return list<RelationChangeSet>
+     */
+    #[Computed]
+    public function relationDiffs(): array
+    {
+        $version = $this->version;
+
+        if (! $version instanceof Version) {
+            return [];
+        }
+
+        return (new RelationDiff(
+            newVersion: $version,
+            oldVersion: $version->previousVersion(),
+            differOptions: ['fullContextIfIdentical' => true],
+            renderOptions: ['lineNumbers' => false, 'showHeader' => false, 'detailLevel' => 'word', 'spacesToNbsp' => false],
+            stripTags: $this->shouldStripTags(),
+        ))->changes();
     }
 
     #[Computed]
@@ -126,7 +154,38 @@ class RevisionsPage extends Page
 
     public function restoreVersion(): void
     {
-        $this->version->previousVersion()->revert();
+        $target = $this->version->previousVersion();
+
+        if ($target === null) {
+            return;
+        }
+
+        DB::transaction(function () use ($target): void {
+            $target->revert();
+
+            $record = $target->versionable;
+
+            if ($record instanceof Model && RelationSnapshotManager::usesVersionableRelations($record)) {
+                $snapshot = RelationSnapshotManager::forVersion($target);
+
+                if ($snapshot !== []) {
+                    RelationSnapshotManager::restore($record, $snapshot);
+                }
+
+                // The revert itself created a version — refresh its
+                // relationship snapshot to the post-restore state.
+                $created = method_exists($record, 'latestVersion')
+                    ? $record->latestVersion()->first()
+                    : null;
+
+                if ($created !== null && $created->isNot($target)) {
+                    RelationSnapshotManager::storeSnapshot(
+                        $created,
+                        RelationSnapshotManager::captureSnapshot($record)
+                    );
+                }
+            }
+        });
 
         $parameters = ['record' => $this->getRecord()];
 

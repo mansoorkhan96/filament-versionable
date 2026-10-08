@@ -17,6 +17,7 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Mansoor\FilamentVersionable\Tests\Fixtures\Resources\CategoryResource;
 use Mansoor\FilamentVersionable\Tests\Fixtures\Resources\NestedPostResource;
 use Mansoor\FilamentVersionable\Tests\Fixtures\Resources\PostResource;
+use Mansoor\FilamentVersionable\Tests\Fixtures\Resources\VersionablePostResource;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -30,6 +31,7 @@ class AdminPanelProvider extends PanelProvider
                 PostResource::class,
                 CategoryResource::class,
                 NestedPostResource::class,
+                VersionablePostResource::class,
             ])
             ->middleware([
                 EncryptCookies::class,

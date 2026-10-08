@@ -86,6 +86,7 @@ class TestCase extends Orchestra
             $table->string('name');
             $table->string('email')->unique()->nullable();
             $table->string('password')->nullable();
+            $table->unsignedBigInteger('versionable_post_id')->nullable();
             $table->timestamps();
         });
 
@@ -105,7 +106,69 @@ class TestCase extends Orchestra
             $table->timestamps();
         });
 
+        Schema::create('comments', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('post_id')->index();
+            $table->string('author');
+            $table->text('body')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('profiles', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('versionable_post_id')->index();
+            $table->string('bio')->nullable();
+            $table->timestamps();
+        });
+
+        Schema::create('tags', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->timestamps();
+        });
+
+        Schema::create('post_tag', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('post_id')->index();
+            $table->unsignedBigInteger('tag_id')->index();
+            $table->unsignedInteger('position')->default(0);
+        });
+
+        Schema::create('taggables', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('tag_id')->index();
+            $table->unsignedBigInteger('taggable_id')->nullable();
+            $table->string('taggable_type')->nullable();
+            $table->unsignedInteger('position')->default(0);
+        });
+
+        Schema::create('attachments', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('attachable_id')->nullable();
+            $table->string('attachable_type')->nullable();
+            $table->string('name');
+            $table->timestamps();
+        });
+
+        Schema::create('seo_metas', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('metaable_id')->nullable();
+            $table->string('metaable_type')->nullable();
+            $table->string('meta')->nullable();
+            $table->timestamps();
+        });
+
+        Schema::create('projects', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('user_id')->index();
+            $table->string('name');
+            $table->timestamps();
+        });
+
         // Load versions table migrations from overtrue/laravel-versionable
+        // and the plugin migration that adds the `relations` column.
         $this->loadMigrationsFrom(__DIR__.'/../vendor/overtrue/laravel-versionable/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
     }
 }
