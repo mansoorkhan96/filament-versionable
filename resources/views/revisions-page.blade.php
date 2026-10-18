@@ -68,7 +68,7 @@
                                     @endif
                                 </div>
 
-                                <div dir="{{ $entry->direction }}">
+                                <div @if ($entry->locale) data-locale-direction="{{ $entry->direction }}" @endif>
                                     {!! $entry->html !!}
                                 </div>
                             </div>

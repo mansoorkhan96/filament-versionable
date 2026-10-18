@@ -12,7 +12,7 @@ class DiffEntry
      * @param  string  $field  The versioned attribute name.
      * @param  string|null  $locale  The locale this entry belongs to, or null for non-translatable attributes.
      * @param  string  $localeLabel  Human-readable locale label (e.g. "Arabic"), empty for non-translatable attributes.
-     * @param  string  $direction  Text direction hint for the wrapper element ("ltr", "rtl" or "auto").
+     * @param  string  $direction  Text direction of the locale's diff cell contents ("ltr", "rtl" or "auto").
      * @param  string  $html  The rendered side-by-side diff HTML.
      */
     public function __construct(

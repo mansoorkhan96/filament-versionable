@@ -5,6 +5,7 @@ use Mansoor\FilamentVersionable\Support\TranslatableDiff;
 use Mansoor\FilamentVersionable\Tests\Fixtures\Models\DiffTranslatablePost;
 use Mansoor\FilamentVersionable\Tests\Fixtures\Models\Post;
 use Mansoor\FilamentVersionable\Tests\Fixtures\Models\TranslatablePost;
+use Mansoor\FilamentVersionable\Tests\Fixtures\Resources\PostResource\Pages\PostRevisions;
 use Mansoor\FilamentVersionable\Tests\Fixtures\Resources\TranslatablePostResource\Pages\TranslatablePostRevisions;
 use Overtrue\LaravelVersionable\Version;
 
@@ -301,15 +302,29 @@ describe('revisions page rendering', function () {
             ->assertDontSee('{"en"');
     });
 
-    it('renders the rtl direction for arabic content', function () {
+    it('applies the locale direction to the diff cells without mirroring the table', function () {
         $post = createTranslatablePost();
         updateTranslatablePost($post, [
             'title' => ['en' => 'Updated Title'],
         ]);
 
-        livewire(TranslatablePostRevisions::class, ['record' => $post->getKey()])
+        $component = livewire(TranslatablePostRevisions::class, ['record' => $post->getKey()])
             ->assertOk()
-            ->assertSeeHtml('dir="rtl"');
+            ->assertSeeHtml('data-locale-direction="rtl"')
+            ->assertSeeHtml('data-locale-direction="ltr"');
+
+        expect(wrapsDiffTableWithDir($component->html()))->toBeFalse();
+    });
+
+    it('does not set a direction on diff tables of non-translatable models', function () {
+        $post = createUserPost();
+        $post->update(['title' => 'عنوان محدث']);
+
+        $component = livewire(PostRevisions::class, ['record' => $post->getKey()])
+            ->assertOk()
+            ->assertDontSeeHtml('data-locale-direction');
+
+        expect(wrapsDiffTableWithDir($component->html()))->toBeFalse();
     });
 
     it('does not render raw json for translatable fields after restore', function () {
@@ -338,6 +353,12 @@ function pageDiff(Version $version): TranslatableDiff
         differOptions: ['fullContextIfIdentical' => true],
         renderOptions: ['lineNumbers' => false, 'showHeader' => false, 'detailLevel' => 'word', 'spacesToNbsp' => false],
     );
+}
+
+function wrapsDiffTableWithDir(string $html): bool
+{
+    // A dir attribute on the table's wrapper mirrors the old/new columns.
+    return preg_match('/<div[^>]*\sdir="[^"]*"[^>]*>\s*<table class="diff-wrapper/', $html) === 1;
 }
 
 function createTranslatablePost(bool $withFrench = true): TranslatablePost
