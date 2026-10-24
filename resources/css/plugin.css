@@ -16,6 +16,11 @@
     text-align: start;
 }
 
+.diff-wrapper.diff bdi {
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+}
+
 .diff-wrapper.diff.diff-html .change.change-eq .old,
 .diff-wrapper.diff.diff-html .change.change-eq .new {
     @apply bg-transparent w-1/2;
