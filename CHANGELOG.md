@@ -2,18 +2,6 @@
 
 All notable changes to `filament-versionable` will be documented in this file.
 
-## Unreleased
-
-### Added
-
-* Support for `spatie/laravel-translatable` models on the Revisions page (#31). Translatable attributes are now expanded into one diff block per locale, with a locale badge, human-readable locale labels and right-to-left (RTL) rendering support, instead of showing a raw JSON blob containing every language.
-* New `Mansoor\FilamentVersionable\Support\TranslatableDiff` and `Mansoor\FilamentVersionable\Support\DiffEntry` classes powering the per-locale rendering.
-* New `RevisionsPage::diffEntries()` and `RevisionsPage::diffStats()` / `RevisionsPage::versionStats()` public API for customising the rendered diff.
-
-### Changed
-
-* The `RevisionsPage::diff()` computed property now returns entries keyed by `field` (or `field (locale)` for translatable attributes). If you published the `revisions-page` blade view, republish or update it to keep the new per-locale rendering.
-
 ## v0.0.13 - 2025-03-28
 
 ### What's Changed
