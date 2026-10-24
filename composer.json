@@ -26,7 +26,7 @@
         "overtrue/laravel-versionable": "^5.5.0"
     },
     "require-dev": {
-        "larastan/larastan": "3.0",
+        "larastan/larastan": "^3.0",
         "laravel/pint": "^1.0",
         "nunomaduro/collision": "^7.9|^8.8.0",
         "orchestra/testbench": "^9.0|^10.0",
