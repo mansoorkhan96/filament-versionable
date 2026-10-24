@@ -124,6 +124,21 @@ describe('per-locale diff entries', function () {
         expect($frenchEntry->html)->toContain('Titre mis à jour');
     });
 
+    it('shows locales removed in later versions as deletions', function () {
+        $post = createTranslatablePost();
+        $post->forgetTranslation('title', 'fr');
+        $post->save();
+
+        $entries = pageDiff($post->latestVersion)->entries();
+
+        $frenchEntry = collect($entries)->first(
+            fn (DiffEntry $entry) => $entry->field === 'title' && $entry->locale === 'fr',
+        );
+
+        expect($frenchEntry)->not->toBeNull();
+        expect($frenchEntry->html)->toContain('<td class="old"><del>Titre original</del></td>');
+    });
+
     it('marks right-to-left locales with rtl direction', function () {
         $post = createTranslatablePost();
         updateTranslatablePost($post, [
@@ -245,8 +260,29 @@ describe('diff statistics', function () {
 
         $stats = TranslatableDiff::forVersion($post->latestVersion)->statistics();
 
-        expect($stats['inserted'])->toBeGreaterThan(0);
-        expect($stats['deleted'])->toBeGreaterThan(0);
+        expect($stats['inserted'])->toBe(2);
+        expect($stats['deleted'])->toBe(2);
+    });
+
+    it('counts changed lines per locale instead of per json blob', function () {
+        $post = TranslatablePost::create([
+            'title' => ['en' => 'Title'],
+            'summary' => ['en' => "one\ntwo\nthree"],
+            'status' => 'draft',
+            'user_id' => auth()->id(),
+        ]);
+        updateTranslatablePost($post, [
+            'summary' => ['en' => "one\nTWO\nTHREE"],
+        ]);
+
+        $stats = TranslatableDiff::forVersion($post->latestVersion)->statistics();
+
+        expect($stats['inserted'])->toBe(2);
+        expect($stats['deleted'])->toBe(2);
+        expect($stats['unmodified'])->toBe(1);
+
+        // The raw json blob is a single line, so it would report one change.
+        expect($post->latestVersion->diff()->getStatistics()['inserted'])->toBe(1);
     });
 
     it('reports zero changes for identical snapshots', function () {
