@@ -20,6 +20,8 @@
             <directory>tests</directory>
         </testsuite>
     </testsuites>
+    <!-- Coverage reports require a coverage driver (Xdebug/PCOV) -->
+    <!--
     <coverage>
         <report>
             <html outputDirectory="build/coverage"/>
@@ -27,6 +29,7 @@
             <clover outputFile="build/logs/clover.xml"/>
         </report>
     </coverage>
+    -->
     <logging>
         <junit outputFile="build/report.junit.xml"/>
     </logging>
