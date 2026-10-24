@@ -6,6 +6,21 @@
     @apply leading-relaxed px-3 py-2 align-top;
 }
 
+[data-locale-direction='rtl'] .diff-wrapper.diff td {
+    direction: rtl;
+    text-align: start;
+}
+
+[data-locale-direction='ltr'] .diff-wrapper.diff td {
+    direction: ltr;
+    text-align: start;
+}
+
+.diff-wrapper.diff bdi {
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+}
+
 .diff-wrapper.diff.diff-html .change.change-eq .old,
 .diff-wrapper.diff.diff-html .change.change-eq .new {
     @apply bg-transparent w-1/2;

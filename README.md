@@ -119,6 +119,35 @@ $table->actions([
 
 You are all set! Your app should store the model states and you can manage them in Filament.
 
+## Translatable Models
+
+If your model uses [spatie/laravel-translatable](https://github.com/spatie/laravel-translatable), the Revisions page automatically splits every translatable attribute into one diff block per locale, so instead of a raw JSON blob like `{"en":"Hello","ar":"مرحبا"}` you get a clean, readable diff for each language — complete with a locale badge, right-to-left rendering support, and the same word-level highlighting as any other attribute.
+
+```php
+use Overtrue\LaravelVersionable\Versionable;
+use Overtrue\LaravelVersionable\VersionStrategy;
+use Spatie\Translatable\HasTranslations;
+
+class Article extends Model
+{
+    use HasTranslations;
+    use Versionable;
+
+    protected $versionable = ['title', 'content'];
+
+    protected $versionStrategy = VersionStrategy::SNAPSHOT;
+
+    public array $translatable = ['title', 'content'];
+}
+```
+
+No extra setup is required. The detection is based on the model exposing `getTranslatableAttributes()` (provided by the `HasTranslations` trait), so models without translations keep rendering exactly as before. Models using the `DIFF` version strategy are supported as well.
+
+The right-to-left styling ships in the plugin's `plugin.css`, so rebuild your theme after upgrading.
+
+> [!NOTE]
+> If you are on Filament 3, you may also use the official [filament/spatie-laravel-translatable-plugin](https://filamentphp.com/plugins/spatie-laravel-translatable) to edit translatable records. From Filament 4 onwards the official plugin no longer exists; community packages such as [lara-zeus/spatie-translatable](https://github.com/lara-zeus/spatie-translatable) provide the equivalent editing experience for recent Filament versions. Either way, the Revisions page renders translatable attributes per locale on its own.
+
 ## Customisation
 
 If you want to change the UI for Revisions page, you may publish the publish the views to do so.

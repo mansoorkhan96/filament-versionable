@@ -105,6 +105,15 @@ class TestCase extends Orchestra
             $table->timestamps();
         });
 
+        Schema::create('translatable_posts', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->json('title');
+            $table->json('summary')->nullable();
+            $table->string('status')->nullable();
+            $table->timestamps();
+        });
+
         // Load versions table migrations from overtrue/laravel-versionable
         $this->loadMigrationsFrom(__DIR__.'/../vendor/overtrue/laravel-versionable/migrations');
     }

@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Livewire\Attributes\Computed;
 use Livewire\WithPagination;
+use Mansoor\FilamentVersionable\Support\DiffEntry;
+use Mansoor\FilamentVersionable\Support\TranslatableDiff;
 use Overtrue\LaravelVersionable\Version;
 
 class RevisionsPage extends Page
@@ -55,16 +57,68 @@ class RevisionsPage extends Page
         return $this->record->versions()->count() > 1;
     }
 
+    /**
+     * The keyed diff array (field or "field (locale)" => rendered HTML).
+     *
+     * @return array<string, string>
+     */
     #[Computed]
     public function diff(): array
     {
-        return $this->version
-            ->diff()
-            ->toSideBySideHtml(
-                differOptions: ['fullContextIfIdentical' => true],
-                renderOptions: ['lineNumbers' => false, 'showHeader' => false, 'detailLevel' => 'word', 'spacesToNbsp' => false],
-                stripTags: $this->shouldStripTags()
-            );
+        return collect($this->diffEntries())
+            ->mapWithKeys(fn (DiffEntry $entry) => [$entry->key() => $entry->html])
+            ->all();
+    }
+
+    /**
+     * The structured diff entries between the shown version and its predecessor.
+     * Translatable attributes are expanded into one entry per locale.
+     *
+     * @return list<DiffEntry>
+     */
+    #[Computed]
+    public function diffEntries(): array
+    {
+        if (! $this->version instanceof Version) {
+            return [];
+        }
+
+        return TranslatableDiff::forVersion(
+            $this->version,
+            differOptions: ['fullContextIfIdentical' => true],
+            renderOptions: ['lineNumbers' => false, 'showHeader' => false, 'detailLevel' => 'word', 'spacesToNbsp' => false],
+            stripTags: $this->shouldStripTags(),
+        )->entries();
+    }
+
+    /**
+     * The aggregated diff statistics of the currently shown version.
+     *
+     * @return array{inserted: int, deleted: int, unmodified: int, changedRatio: float|int}
+     */
+    #[Computed]
+    public function diffStats(): array
+    {
+        if (! $this->version instanceof Version) {
+            return [
+                'inserted' => 0,
+                'deleted' => 0,
+                'unmodified' => 0,
+                'changedRatio' => 0,
+            ];
+        }
+
+        return $this->versionStats($this->version);
+    }
+
+    /**
+     * The aggregated diff statistics of any version.
+     *
+     * @return array{inserted: int, deleted: int, unmodified: int, changedRatio: float|int}
+     */
+    public function versionStats(Version $version): array
+    {
+        return TranslatableDiff::forVersion($version)->statistics();
     }
 
     #[Computed]

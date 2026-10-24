@@ -25,6 +25,9 @@
         "illuminate/contracts": "^11.0|^12.0|^13.0",
         "overtrue/laravel-versionable": "^5.5.0|^6.0"
     },
+    "suggest": {
+        "spatie/laravel-translatable": "Required to display translatable attributes per locale on the revisions page (^6.0)."
+    },
     "require-dev": {
         "filament/upgrade": "^5.0",
         "larastan/larastan": "^3.0",
@@ -33,7 +36,8 @@
         "orchestra/testbench": "^10.0|^11.0",
         "pestphp/pest": "^3.7|^4.0",
         "pestphp/pest-plugin-arch": "^3.0|^4.0",
-        "pestphp/pest-plugin-laravel": "^3.0|^4.0"
+        "pestphp/pest-plugin-laravel": "^3.0|^4.0",
+        "spatie/laravel-translatable": "^6.0"
     },
     "autoload": {
         "psr-4": {

@@ -38,7 +38,7 @@
                                     </div>
 
                                     @php
-                                        $diffStats = $this->version->diff()->getStatistics();
+                                        $diffStats = $this->diffStats;
                                     @endphp
 
                                     <x-filament-versionable::diff-stats :$diffStats />
@@ -50,13 +50,27 @@
                     </x-slot>
 
                     <div class="space-y-6 divide-y-1 divide-gray-200 dark:divide-white/10">
-                        @foreach ($this->diff as $fieldName => $diff)
+                        @foreach ($this->diffEntries as $entry)
                             <div class="pb-6">
-                                <p class="mb-2 px-1 text-lg font-medium capitalize">
-                                    {{ $fieldName }}
-                                </p>
+                                <div class="mb-2 flex flex-wrap items-center gap-x-2 gap-y-1 px-1">
+                                    <p class="text-lg font-medium capitalize">
+                                        {{ $entry->field }}
+                                    </p>
 
-                                {!! $diff !!}
+                                    @if ($entry->locale)
+                                        <x-filament::badge
+                                            color="gray"
+                                            size="xs"
+                                            :tooltip="$entry->locale"
+                                        >
+                                            {{ $entry->localeLabel }}
+                                        </x-filament::badge>
+                                    @endif
+                                </div>
+
+                                <div @if ($entry->locale) data-locale-direction="{{ $entry->direction }}" @endif>
+                                    {!! $entry->html !!}
+                                </div>
                             </div>
                         @endforeach
                     </div>
@@ -119,7 +133,7 @@
                                 </div>
 
                                 @php
-                                    $diffStats = $version->diff()->getStatistics();
+                                    $diffStats = $this->versionStats($version);
                                 @endphp
 
                                 <x-filament-versionable::diff-stats
