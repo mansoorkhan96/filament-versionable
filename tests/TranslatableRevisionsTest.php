@@ -139,6 +139,28 @@ describe('per-locale diff entries', function () {
         expect($frenchEntry->html)->toContain('<td class="old"><del>Titre original</del></td>');
     });
 
+    it('isolates html tags in right-to-left locales only', function () {
+        $post = TranslatablePost::create([
+            'title' => ['en' => 'Title', 'ar' => 'عنوان'],
+            'summary' => ['en' => '<p>Hello</p>', 'ar' => '<p>مرحبا</p>'],
+            'user_id' => auth()->id(),
+        ]);
+        updateTranslatablePost($post, [
+            'summary' => ['en' => '<p class="lead">Hello all</p>', 'ar' => '<p class="lead">مرحبا بكم</p>'],
+        ]);
+
+        $entries = collect(pageDiff($post->latestVersion)->entries());
+
+        $arabicHtml = $entries->first(fn (DiffEntry $entry) => $entry->field === 'summary' && $entry->locale === 'ar')->html;
+        $englishHtml = $entries->first(fn (DiffEntry $entry) => $entry->field === 'summary' && $entry->locale === 'en')->html;
+
+        expect($arabicHtml)
+            ->toContain('<bdi dir="ltr">&lt;p&gt;</bdi>')
+            ->toContain('<bdi dir="ltr">&lt;p<ins> class="lead"</ins>&gt;</bdi>')
+            ->toContain('<bdi dir="ltr">&lt;/p&gt;</bdi>');
+        expect($englishHtml)->not->toContain('<bdi');
+    });
+
     it('marks right-to-left locales with rtl direction', function () {
         $post = createTranslatablePost();
         updateTranslatablePost($post, [

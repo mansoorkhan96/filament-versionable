@@ -327,18 +327,37 @@ class TranslatableDiff
      * Render one locale pair as a side-by-side diff, using the exact same
      * renderer and options the revisions page already uses.
      *
-     * @param  array{old: mixed, new: mixed}  $pair
+     * @param  array{locale: string|null, old: mixed, new: mixed}  $pair
      */
     protected function renderLocaleDiff(array $pair): string
     {
         $old = static::stringify($pair['old'] ?? null);
         $new = static::stringify($pair['new'] ?? null);
 
-        return str_replace(
+        $html = str_replace(
             '\n No newline at end of file',
             '',
             DiffHelper::calculate($old, $new, 'SideBySide', $this->differOptions, $this->renderOptions),
         );
+
+        return static::localeDirection($pair['locale']) === 'rtl'
+            ? static::isolateMarkup($html)
+            : $html;
+    }
+
+    /**
+     * Isolate escaped HTML tags (e.g. `&lt;p&gt;`) as left-to-right runs so
+     * they are not mirrored inside right-to-left text. A tag may contain
+     * whole `<ins>`/`<del>` highlights; any other markup inside it leaves
+     * the tag untouched so the rendered HTML stays well-formed.
+     */
+    protected static function isolateMarkup(string $html): string
+    {
+        return preg_replace(
+            '/&lt;\/?[a-zA-Z](?:[^<&]|&(?!lt;|gt;)|<(ins|del)>[^<]*<\/\1>)*?&gt;/',
+            '<bdi dir="ltr">$0</bdi>',
+            $html,
+        ) ?? $html;
     }
 
     /**
